@@ -122,7 +122,7 @@ export default function PersonalFinance() {
 
   return (
     <CategoryProvider>
-      <div className='scrollbar-hide m-3 flex grid min-h-full grid-cols-12 gap-5 overflow-y-auto rounded-2xl bg-white p-5 py-2'>
+      <div className='scrollbar-hide m-1 flex grid min-h-full grid-cols-12 gap-5 overflow-y-auto rounded-2xl bg-white p-5 py-2'>
         <div className='col-span-5 flex flex-col gap-5'>
           <div className='flex w-full items-center gap-3'>
             <Balance balance={balance} />
@@ -132,7 +132,7 @@ export default function PersonalFinance() {
             <CategoryList income={income} />
           </div>
         </div>
-        <div className='scrollbar-hide col-span-7 flex h-[33rem] w-full flex-col gap-3 overflow-y-auto'>
+        <div className='scrollbar-hide col-span-7 flex h-[34rem] w-full flex-col gap-3 overflow-y-auto'>
           <SpendingList
             spendingList={spendingList}
             onUpdateSpending={handleUpdateSpending}

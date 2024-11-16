@@ -59,6 +59,8 @@ export default function CategoryList({ income }: { income: number }) {
         <CategoryForm
           modalRef={modalRef}
           form={addForm}
+          categoryList={categoryList}
+          income={income}
           title='Add category'
           handleCancel={modalRef.current?.closeModal}
           handleSubmit={handleAddCategory}
@@ -66,7 +68,13 @@ export default function CategoryList({ income }: { income: number }) {
       </div>
       <div className='scrollbar-hide m-1 flex h-full flex-wrap overflow-y-auto rounded-2xl border-none bg-zinc-300 p-5'>
         {categoryList.map((category) => (
-          <CategoryItem key={category.id} category={category} onUpdateCategory={handleUpdateCategory} income={income} />
+          <CategoryItem
+            key={category.id}
+            category={category}
+            categoryList={categoryList}
+            onUpdateCategory={handleUpdateCategory}
+            income={income}
+          />
         ))}
       </div>
     </>

@@ -39,7 +39,7 @@ export default function CategoryDistribution() {
         </Form>
       </div>
 
-      <div className='scrollbar-hide flex h-[31rem] w-full justify-center overflow-y-auto'>
+      <div className='scrollbar-hide flex h-[32rem] w-full justify-center overflow-y-auto'>
         <div className='w-3/6'>
           <PieChart title='Outcome by Category' datasets={outcomeData} />
           <PieChart title='Income by Category' datasets={incomeData} />

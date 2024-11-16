@@ -5,5 +5,6 @@ export const PATH_URL = {
   personalFinance: '/personal-finance',
   groups: '/groups',
   settings: '/settings',
-  statistics: '/statistics'
+  statistics: '/statistics',
+  groupDetail: '/groups/:id'
 }

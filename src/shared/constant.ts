@@ -56,8 +56,33 @@ export const SIDEBAR_OPTIONS = [
     key: 'statistics',
     label: 'Statistics',
     path: '/statistics',
-    icon: 'fa:graph-line'
+    icon: 'fa:bar-chart'
   }
+]
+
+export const CATEGORY_NAME = [
+  'Credit Card Payment',
+  'Paycheck',
+  'Alcohol & Bars',
+  'Auto Insurance',
+  'Coffee Shops',
+  'Electronics & Software',
+  'Entertainment',
+  'Fast Food',
+  'Food & Dining',
+  'Gas & Fuel',
+  'Groceries',
+  'Haircut',
+  'Home Improvement',
+  'Internet',
+  'Mobile Phone',
+  'Mortgage & Rent',
+  'Movies & DVDs',
+  'Music',
+  'Restaurants',
+  'Shopping',
+  'Television',
+  'Utilities'
 ]
 
 export const CategoryIcon = [

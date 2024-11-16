@@ -1,35 +1,86 @@
-import { DeleteOutlined, EditOutlined } from '@ant-design/icons'
-import type { ModalFuncProps } from 'antd'
-import { Modal, Space } from 'antd'
+import { Modal } from 'antd'
+import { forwardRef, useImperativeHandle, useState } from 'react'
 
 interface Props {
-  onEdit?: () => void
-  onDelete?: () => void
-  deleteAction?: ModalFuncProps
+  title: string
+  onOk?: () => void
+  onCancel?: () => void
 }
 
-function FormAction({ onEdit, onDelete, deleteAction }: Props) {
-  const [modal, contextHolder] = Modal.useModal()
+export interface IConfirmModalRef {
+  showModal: () => void
+}
 
-  const handleDelete = () => {
-    modal.confirm({
-      cancelText: deleteAction?.cancelText ?? 'Cancel',
-      centered: true,
-      content: deleteAction?.content ?? 'Are you sure you want to delete this item?',
-      icon: deleteAction?.icon,
-      okText: deleteAction?.okText ?? 'Delete',
-      onOk: onDelete,
-      title: deleteAction?.title ?? 'Delete Item'
-    })
+function ConfirmModal({ title, onOk, onCancel }: Props, ref: React.Ref<IConfirmModalRef>) {
+  const [isModalOpen, setIsModalOpen] = useState(false)
+
+  const showModal = () => {
+    setIsModalOpen(true)
   }
 
+  const handleOk = () => {
+    onOk && onOk()
+    setIsModalOpen(false)
+  }
+
+  const handleCancel = () => {
+    onCancel && onCancel()
+    setIsModalOpen(false)
+  }
+
+  useImperativeHandle(
+    ref,
+    () => {
+      return {
+        showModal: showModal
+      }
+    },
+    []
+  )
+
   return (
-    <Space className='flex items-center' size={14}>
-      {onEdit && <EditOutlined name='edit' onClick={onEdit} />}
-      {onDelete && <DeleteOutlined name='ic-delete' onClick={handleDelete} />}
-      {contextHolder}
-    </Space>
+    <Modal
+      title={title}
+      open={isModalOpen}
+      onOk={handleOk}
+      onCancel={handleCancel}
+      okText='Confirm'
+      cancelText='Cancel'
+    >
+      <p>Are you sure you want to perform this action?</p>
+    </Modal>
   )
 }
 
-export default FormAction
+export default forwardRef(ConfirmModal)
+// interface Props {
+//   onEdit?: () => void
+//   onDelete?: () => void
+//   deleteAction?: ModalFuncProps
+// }
+
+// function FormAction({ onEdit, onDelete, deleteAction }: Props) {
+//   const [modal, contextHolder] = Modal.useModal()
+
+//   const handleDelete = () => {
+//     modal.confirm({
+//       cancelText: deleteAction?.cancelText ?? 'Cancel',
+//       centered: true,
+//       content: deleteAction?.content ?? 'Are you sure you want to delete this item?',
+//       icon: deleteAction?.icon,
+//       okText: deleteAction?.okText ?? 'Delete',
+//       onOk: onDelete,
+//       title: deleteAction?.title ?? 'Delete Item'
+//     })
+//   }
+
+//   return (
+//     <Space className='flex items-center' size={14}>
+//       {onEdit && <EditOutlined name='edit' onClick={onEdit} />}
+//       {onDelete && <DeleteOutlined name='ic-delete' onClick={handleDelete} />}
+//       {contextHolder}
+//     </Space>
+//   )
+// }
+
+// export default FormAction

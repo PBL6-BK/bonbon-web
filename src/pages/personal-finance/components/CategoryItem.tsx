@@ -9,11 +9,12 @@ import { Form, FormInstance } from 'antd'
 
 interface Props {
   category: CategoryDetail
+  categoryList: CategoryDetail[]
   income: number
   onUpdateCategory: (id: number, category: CategoryDetail) => void
 }
 
-export default function CategoryItem({ category, income, onUpdateCategory }: Props) {
+export default function CategoryItem({ category, categoryList, income, onUpdateCategory }: Props) {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const modalRef = useRef<IFormModalRef>(null)
   const [editForm] = Form.useForm()
@@ -71,7 +72,9 @@ export default function CategoryItem({ category, income, onUpdateCategory }: Pro
         <CategoryForm
           modalRef={modalRef}
           form={editForm}
+          categoryList={categoryList}
           formData={category}
+          income={income}
           title='Edit category'
           handleCancel={modalRef.current?.closeModal}
           handleSubmit={handleUpdateCategory}

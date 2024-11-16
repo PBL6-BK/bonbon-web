@@ -1,6 +1,6 @@
 import { createContext, useState } from 'react'
 import { ReactWithChild } from 'src/interface/app'
-import { User } from 'src/types/users.type'
+import { User } from 'src/types/user.type'
 import { getAccessTokenFromLS, getProfileFromLS } from 'src/utils/auth'
 
 export interface AppContextType {

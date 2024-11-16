@@ -1,4 +1,4 @@
-import { User } from './users.type'
+import { User } from './user.type'
 import { SuccessResponse } from './utils.type'
 export interface SelectOption {
   label: string

@@ -23,6 +23,10 @@ export const PRIVATE_ROUTES: Route[] = [
     element: () => import('src/pages/groups/Groups')
   },
   {
+    path: PATH_URL.groupDetail,
+    element: () => import('src/pages/groups/components/group-detail/GroupDetail')
+  },
+  {
     path: PATH_URL.settings,
     element: () => import('src/pages/settings/Settings')
   },

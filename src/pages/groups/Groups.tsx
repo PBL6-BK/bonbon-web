@@ -1,7 +1,12 @@
+import { Route, Routes } from 'react-router-dom'
+import GroupList from './components/GroupList'
+import GroupDetail from './components/group-detail/GroupDetail'
+
 export default function Groups() {
   return (
-    <div>
-      <p>Groups</p>
-    </div>
+    <Routes>
+      <Route path='/' element={<GroupList />} />
+      <Route path='/:id' element={<GroupDetail />} />
+    </Routes>
   )
 }
