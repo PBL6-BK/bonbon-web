@@ -110,7 +110,6 @@ export default function PersonalFinance() {
       const getBalanceOverview = async () => {
         const res = await spendingApi.balanceOverview()
         const data = res.data
-        console.log(data)
         setIncome(data['total_income'])
         setOutcome(data['total_outcome'])
         setBalance(data['balance'])

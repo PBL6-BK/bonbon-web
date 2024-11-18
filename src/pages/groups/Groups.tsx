@@ -1,6 +1,7 @@
 import { Route, Routes } from 'react-router-dom'
 import GroupList from './components/GroupList'
 import GroupDetail from './components/group-detail/GroupDetail'
+import GroupEventDetail from './components/group-event/GroupEventDetail'
 
 export default function Groups() {
   return (

@@ -86,7 +86,7 @@ export default function GroupForm({ title, modalRef, form, formData, handleSubmi
             { max: 30, message: 'Name cannot exceed 30 characters' }
           ]}
         >
-          <Input maxLength={30} />
+          <Input />
         </Form.Item>
 
         {!formData && (

@@ -30,7 +30,28 @@ interface EventGroup {
   group_id: number
   name: string
   created_at: string
-  updated_at: string
+  updated_at?: string
+  can_modified: boolean
 }
 
-export type { Group, RequestedGroup, UserGroupDetail, EventGroup }
+interface EventItem {
+  id: number
+  event_id: number
+  name: string
+  created_at: string
+  updated_at?: string
+  spendings: GroupSpending[]
+}
+
+interface GroupSpending {
+  id: number
+  member_id?: number
+  full_name?: string
+  avatar?: string
+  amount: number
+  price: number
+  currency: Currency
+  is_main_spender?: boolean
+}
+
+export type { Group, RequestedGroup, UserGroupDetail, EventGroup, EventItem, GroupSpending }

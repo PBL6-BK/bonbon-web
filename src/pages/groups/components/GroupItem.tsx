@@ -19,7 +19,7 @@ export default function GroupItem({ group, backgroundColor }: Props) {
     <div
       role='button'
       tabIndex={0}
-      className={`flex h-36 w-[calc(25%-1rem)] flex-col items-center rounded-2xl bg-gray-300 p-4 hover:cursor-pointer ${backgroundColor}`}
+      className={`flex h-36 w-[calc(25%-1rem)] flex-col items-center rounded-2xl p-4 hover:scale-105 hover:cursor-pointer ${backgroundColor}`}
       onClick={handleClick}
       onKeyDown={(e) => {
         if (e.key === 'Enter' || e.key === ' ') {
