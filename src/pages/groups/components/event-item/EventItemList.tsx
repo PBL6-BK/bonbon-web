@@ -8,7 +8,7 @@ import { Form } from 'antd'
 import { toast } from 'react-toastify'
 import { useFieldValue } from 'src/shared/hook'
 import EventItem from './EventItem'
-import type { EventItem as EventItemType } from 'src/types/group.type'
+import type { EventItem as EventItemType, GroupSpending } from 'src/types/group.type'
 import GroupEventForm from '../GroupEventForm'
 
 interface Props {
@@ -38,6 +38,10 @@ export default function EventItemList({ eventId, canModified }: Props) {
     toast.success('Update an item successfully')
   }
 
+  const handleUpdateItemSpending = (id: number, updatedSpendings: GroupSpending[]) => {
+    setItems(items.map((item) => (item.id === id ? { ...item, spendings: updatedSpendings } : item)))
+  }
+
   const handleDeleteItem = async (id: number) => {
     await groupApi.deleteItem(id)
     setItems(items.filter((item) => item.id !== id))
@@ -65,6 +69,7 @@ export default function EventItemList({ eventId, canModified }: Props) {
             canModified={canModified}
             handleUpdate={handleUpdateItem}
             handleDelete={() => handleDeleteItem(item.id)}
+            handleUpdateItemSpending={handleUpdateItemSpending}
           />
         ))}
       </div>

@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { useRef, useState } from 'react'
 import ConfirmModal, { IConfirmModalRef } from 'src/components/common/ConfirmModal'
 import { IFormModalRef } from 'src/components/common/FormModal'
-import type { EventItem } from 'src/types/group.type'
+import type { EventItem, GroupSpending } from 'src/types/group.type'
 import GroupEventForm from '../GroupEventForm'
 import { Form } from 'antd'
 import { useFieldValue } from 'src/shared/hook'
@@ -14,9 +14,16 @@ interface Props {
   canModified: boolean
   handleUpdate: (id: number, updatedName: { name: string }) => void
   handleDelete: () => void
+  handleUpdateItemSpending: (id: number, updatedSpendings: GroupSpending[]) => void
 }
 
-export default function EventItem({ eventItem, canModified, handleUpdate, handleDelete }: Props) {
+export default function EventItem({
+  eventItem,
+  canModified,
+  handleUpdate,
+  handleDelete,
+  handleUpdateItemSpending
+}: Props) {
   const [isOpen, setIsOpen] = useState(false)
   const confirmModalRef = useRef<IConfirmModalRef>(null)
   const modalRef = useRef<IFormModalRef>(null)
@@ -110,7 +117,14 @@ export default function EventItem({ eventItem, canModified, handleUpdate, handle
         </div>
       </div>
 
-      {isOpen && <ItemSpending itemId={eventItem.id} spendings={eventItem.spendings} canModified={canModified} />}
+      {isOpen && (
+        <ItemSpending
+          itemId={eventItem.id}
+          spendings={eventItem.spendings}
+          handleUpdateItemSpending={handleUpdateItemSpending}
+          canModified={canModified}
+        />
+      )}
       <ConfirmModal title='Delete an item' ref={confirmModalRef} onOk={handleDelete} />
       <GroupEventForm
         title='Update an item'

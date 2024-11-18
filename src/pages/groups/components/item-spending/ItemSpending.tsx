@@ -13,6 +13,7 @@ interface Props {
   itemId: number
   spendings: GroupSpending[]
   canModified: boolean
+  handleUpdateItemSpending: (id: number, updatedSpendings: GroupSpending[]) => void
 }
 
 interface SpendingError {
@@ -21,7 +22,7 @@ interface SpendingError {
   price?: string | null
 }
 
-export default function ItemSpending({ itemId, spendings, canModified }: Props) {
+export default function ItemSpending({ itemId, spendings, canModified, handleUpdateItemSpending }: Props) {
   const { members } = useMembers()
   const [isEditing, setIsEditing] = useState(false)
   const [draftSpendings, setDraftSpendings] = useState([...spendings])
@@ -29,23 +30,18 @@ export default function ItemSpending({ itemId, spendings, canModified }: Props) 
   const [isClickOnCreateText, setIsClickOnCreateText] = useState(false)
   const [errors, setErrors] = useState<SpendingError[]>([])
 
-  let isEditForm: boolean
-
   const handleClickCreateText = () => {
     setIsClickOnCreateText(true)
-    isEditForm = false
     setDraftSpendings([...draftSpendings, { id: Date.now(), amount: 0, price: 0, currency: Currency.VND }])
     setIsEditing(true)
-    console.log(draftSpendings)
   }
 
   const handleClickUpdateButton = () => {
-    isEditForm = true
+    setIsClickOnCreateText(false)
     setIsEditing(true)
   }
 
   const handleAddRow = () => {
-    console.log(draftSpendings)
     setDraftSpendings([...draftSpendings, { id: Date.now(), amount: 0, price: 0, currency: Currency.VND }])
   }
 
@@ -62,7 +58,7 @@ export default function ItemSpending({ itemId, spendings, canModified }: Props) 
     setDraftSpendings(updatedSpendings)
   }
 
-  const handleSubmit = async () => {
+  const handleSubmit = () => {
     if (draftSpendings.length === 0) {
       setGlobalError('Spending list must have at least 1 item')
       return
@@ -87,16 +83,32 @@ export default function ItemSpending({ itemId, spendings, canModified }: Props) 
       setGlobalError('Total paid amount must be equal to used amount')
       return
     }
+  }
 
-    const res = isEditForm
-      ? await groupApi.updateItemSpending(itemId, draftSpendings)
-      : await groupApi.createItemSpending(itemId, draftSpendings)
+  const handleCreateSubmit = async () => {
+    handleSubmit()
+
+    const res = await groupApi.createItemSpending(itemId, draftSpendings)
     const data = res.data
 
     setDraftSpendings(data)
     setGlobalError(null)
     setIsEditing(false)
-    toast.success(`${isEditForm ? 'Update' : 'Create'} a spending list successfully`)
+    handleUpdateItemSpending(itemId, data)
+    toast.success('Create a spending list successfully')
+  }
+
+  const handleUpdateSubmit = async () => {
+    handleSubmit()
+
+    const res = await groupApi.updateItemSpending(itemId, draftSpendings)
+    const data = res.data
+
+    setDraftSpendings(data)
+    setGlobalError(null)
+    setIsEditing(false)
+    handleUpdateItemSpending(itemId, data)
+    toast.success('Update a spending list successfully')
   }
 
   const handleCancel = () => {
@@ -109,7 +121,7 @@ export default function ItemSpending({ itemId, spendings, canModified }: Props) 
 
   return (
     <div className='-mt-2 rounded-b-lg bg-blue-300 p-4 shadow-md'>
-      {spendings.length > 0 || isClickOnCreateText ? (
+      {draftSpendings.length > 0 || isClickOnCreateText ? (
         <>
           <div className='mb-3 flex items-center justify-between px-2'>
             <h2 className='text-xl font-bold text-gray-800'>Spending List</h2>
@@ -259,7 +271,7 @@ export default function ItemSpending({ itemId, spendings, canModified }: Props) 
                   </button>
                   <button
                     className='rounded border-none bg-blue-500 px-4 py-2 text-white shadow hover:cursor-pointer hover:bg-blue-600'
-                    onClick={handleSubmit}
+                    onClick={isClickOnCreateText ? handleCreateSubmit : handleUpdateSubmit}
                   >
                     Submit
                   </button>
