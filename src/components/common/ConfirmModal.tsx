@@ -56,7 +56,6 @@ function ConfirmModal({ title, onOk, onCancel }: Props, ref: React.Ref<IConfirmM
 }
 
 export default forwardRef(ConfirmModal)
-
 // interface Props {
 //   onEdit?: () => void
 //   onDelete?: () => void
