@@ -11,10 +11,6 @@ export const AUTH_ROUTES: Route[] = [
 
 export const PRIVATE_ROUTES: Route[] = [
   {
-    path: PATH_URL.home,
-    element: () => import('src/pages/Home')
-  },
-  {
     path: PATH_URL.personalFinance,
     element: () => import('src/pages/personal-finance/PersonalFinance')
   },
@@ -38,7 +34,7 @@ export const PRIVATE_ROUTES: Route[] = [
 
 export const DEFAULT_ROUTE: Route[] = [
   {
-    path: PATH_URL.home,
+    path: PATH_URL.personalFinance,
     element: () => import('src/pages/not-found')
   }
 ]

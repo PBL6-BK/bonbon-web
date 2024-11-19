@@ -11,7 +11,7 @@ function AuthRoutes() {
 
   useEffect(() => {
     if (isAuthenticated) {
-      navigate(PATH_URL.home)
+      navigate(PATH_URL.personalFinance)
     }
   }, [isAuthenticated])
 

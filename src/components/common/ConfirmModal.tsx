@@ -1,10 +1,13 @@
-import { Modal } from 'antd'
+import { Modal, ModalFuncProps } from 'antd'
 import { forwardRef, useImperativeHandle, useState } from 'react'
 
 interface Props {
-  title: string
+  title?: string
   onOk?: () => void
   onCancel?: () => void
+  onDelete?: () => void
+  onEdit?: () => void
+  deleteAction?: ModalFuncProps
 }
 
 export interface IConfirmModalRef {
@@ -53,6 +56,7 @@ function ConfirmModal({ title, onOk, onCancel }: Props, ref: React.Ref<IConfirmM
 }
 
 export default forwardRef(ConfirmModal)
+
 // interface Props {
 //   onEdit?: () => void
 //   onDelete?: () => void

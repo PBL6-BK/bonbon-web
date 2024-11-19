@@ -1,5 +1,5 @@
 import { RouteObject, useRoutes } from 'react-router-dom'
-import { AUTH_ROUTES, DEFAULT_ROUTE, PRIVATE_ROUTES } from './shared/path'
+import { AUTH_ROUTES, PRIVATE_ROUTES } from './shared/path'
 
 // component
 import { Row, Spin } from 'antd'
