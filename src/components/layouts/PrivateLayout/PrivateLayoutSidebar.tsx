@@ -30,7 +30,8 @@ const PrivateLayoutSidebar: FC<PrivateLayoutSidebarProps> = ({ isCollapsed = fal
   return (
     <>
       <div className='logo-container bg-white' style={{ textAlign: 'center', padding: isCollapsed ? '5px' : '9px' }}>
-        <Link to={PATH_URL.home}>
+        {/* <Link to={PATH_URL.home}> */}
+        <Link to={PATH_URL.personalFinance}>
           {!isCollapsed ? (
             <Image src={Logo} preview={false} />
           ) : (

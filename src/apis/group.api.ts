@@ -17,6 +17,7 @@ export const URL_UPDATE_EVENT_ITEM = '/groups/event_item/update'
 export const URL_DELETE_EVENT_ITEM = '/groups/event_item/delete'
 export const URL_CREATE_ITEM_SPENDING = '/group-payment/item-spending/create'
 export const URL_UPDATE_ITEM_SPENDING = '/group-payment/item-spending/update'
+export const URL_ADD_MEMBER = '/groups/user-group/create'
 
 const groupApi = {
   getAllGroups() {
@@ -63,6 +64,9 @@ const groupApi = {
   },
   updateItemSpending(id: number, spendingList: GroupSpending[]) {
     return http.put(`${URL_UPDATE_ITEM_SPENDING}/${id}`, { spending_list: spendingList })
+  },
+  addMemberToGroup(id: number, memberIds: number[]) {
+    return http.post(URL_ADD_MEMBER, { group_id: id, member_ids: memberIds })
   }
 }
 

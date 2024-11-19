@@ -144,7 +144,7 @@ export default function PlanChatbot({ onClose }: Props) {
         const currentQuestion = questions[currentQuestionIndex]
         if (currentQuestion?.options) setShowOptions(true)
       }
-    }, 50)
+    }, 20)
   }
 
   useEffect(() => {

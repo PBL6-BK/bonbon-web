@@ -1,8 +1,9 @@
 export const PATH_URL = {
-  home: '/',
+  // home: '/',
   auth: '/auth',
   login: '/auth/login',
-  personalFinance: '/personal-finance',
+  // personalFinance: '/personal-finance',
+  personalFinance: '/',
   groups: '/groups',
   settings: '/settings',
   statistics: '/statistics',

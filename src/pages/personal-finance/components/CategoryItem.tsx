@@ -106,7 +106,7 @@ export default function CategoryItem({ category, categoryList, income, onUpdateC
       <div className='flex flex-col items-center'>
         <span className='text-md font-bold'>{category.name}</span>
         <span className='text-md text-gray-500'>
-          {spendingAmount}/{maxSpendingAmount}
+          {parseFloat(spendingAmount.toFixed(2))}/{parseFloat(maxSpendingAmount.toFixed(2))}
         </span>
       </div>
     </div>

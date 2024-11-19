@@ -24,6 +24,7 @@ export default function CategoryDistribution() {
       const data = res.data
       setIncomeData(data['income'])
       setOutcomeData(data['outcome'])
+      console.log(data)
     }
     getCategoryDistribution()
   }, [endDate, startDate])

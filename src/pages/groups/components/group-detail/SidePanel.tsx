@@ -12,6 +12,7 @@ import { IFormModalRef } from 'src/components/common/FormModal'
 import { Form } from 'antd'
 import GroupForm from '../GroupForm'
 import { useFieldValue } from 'src/shared/hook'
+import MemberForm from '../MemberForm'
 
 export default function SidePanel() {
   const { id } = useParams()
@@ -26,6 +27,8 @@ export default function SidePanel() {
   const confirmModalRef = useRef<IConfirmModalRef>(null)
   const formModalRef = useRef<IFormModalRef>(null)
   const [editForm] = Form.useForm()
+  const [addMemberForm] = Form.useForm()
+  const addMemberFormModalRef = useRef<IConfirmModalRef>(null)
 
   const canEdit = members.find((mem: UserGroupDetail) => mem.user_id === user?.id)?.can_edit
 
@@ -34,6 +37,8 @@ export default function SidePanel() {
     currency: useFieldValue('currency', editForm)
   }
 
+  const memberIds = useFieldValue('member_ids', addMemberForm)
+
   const handleDeleteGroup = async () => {
     await groupApi.deleteGroup(Number(id))
     navigate(PATH_URL.groups)
@@ -41,10 +46,15 @@ export default function SidePanel() {
   }
 
   const handleUpdateGroup = async () => {
-    console.log(updatedGroup)
     await groupApi.updateGroup(Number(id), updatedGroup)
     setGroup(updatedGroup)
     toast.success('Update group successfully')
+  }
+
+  const handleAddMembers = async () => {
+    const res = await groupApi.addMemberToGroup(Number(id), memberIds)
+    const data = res.data
+    toast.success('Add members successfully')
   }
 
   const toggleMenu = () => {
@@ -127,10 +137,19 @@ export default function SidePanel() {
                     className={`w-full border-none bg-inherit text-left text-lg ${
                       canEdit ? 'cursor-pointer text-black' : 'text-gray-400'
                     }`}
+                    onClick={() => addMemberFormModalRef.current?.showModal()}
                     disabled={!canEdit}
                   >
                     Add member
                   </button>
+                  <MemberForm
+                    title='Add new member'
+                    members={members}
+                    modalRef={addMemberFormModalRef}
+                    form={addMemberForm}
+                    handleSubmit={handleAddMembers}
+                    handleCancel={() => addMemberForm.resetFields()}
+                  />
                 </li>
                 <li className='p-2 hover:bg-gray-200'>
                   <button

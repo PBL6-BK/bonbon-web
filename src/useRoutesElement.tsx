@@ -46,7 +46,7 @@ export default function useRouteElements() {
       element: <NotFoundPage />
     },
     {
-      path: PATH_URL.home,
+      path: PATH_URL.personalFinance,
       element: <PrivateRoutes />,
       children: wrapRoutesWithLazy({ routes: PRIVATE_ROUTES })
     },

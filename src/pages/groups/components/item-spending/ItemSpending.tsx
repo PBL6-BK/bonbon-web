@@ -59,11 +59,6 @@ export default function ItemSpending({ itemId, spendings, canModified, handleUpd
   }
 
   const handleSubmit = () => {
-    if (draftSpendings.length === 0) {
-      setGlobalError('Spending list must have at least 1 item')
-      return
-    }
-
     const newErrors = draftSpendings.map((spending) => ({
       member_id: spending.member_id ? null : 'Member is required'
     }))
@@ -73,7 +68,7 @@ export default function ItemSpending({ itemId, spendings, canModified, handleUpd
     const isValid = newErrors.every((error) => Object.values(error).every((fieldError) => !fieldError))
 
     if (!isValid) {
-      return
+      throw Error('Invalid fields')
     }
 
     const totalAmount = draftSpendings.reduce((acc, spending) => acc + (spending.amount || 0), 0)
@@ -81,34 +76,47 @@ export default function ItemSpending({ itemId, spendings, canModified, handleUpd
 
     if (totalAmount !== totalPrice) {
       setGlobalError('Total paid amount must be equal to used amount')
-      return
+      throw Error('Total paid amount must be equal to used amount')
     }
   }
 
   const handleCreateSubmit = async () => {
-    handleSubmit()
+    try {
+      if (draftSpendings.length === 0) {
+        setGlobalError('Spending list must have at least 1 item')
+        return
+      }
 
-    const res = await groupApi.createItemSpending(itemId, draftSpendings)
-    const data = res.data
+      handleSubmit()
 
-    setDraftSpendings(data)
-    setGlobalError(null)
-    setIsEditing(false)
-    handleUpdateItemSpending(itemId, data)
-    toast.success('Create a spending list successfully')
+      const res = await groupApi.createItemSpending(itemId, draftSpendings)
+      const data = res.data
+
+      setDraftSpendings(data)
+      setGlobalError(null)
+      setIsEditing(false)
+      handleUpdateItemSpending(itemId, data)
+      toast.success('Create a spending list successfully')
+    } catch (e: any) {
+      //
+    }
   }
 
   const handleUpdateSubmit = async () => {
-    handleSubmit()
+    try {
+      handleSubmit()
 
-    const res = await groupApi.updateItemSpending(itemId, draftSpendings)
-    const data = res.data
+      const res = await groupApi.updateItemSpending(itemId, draftSpendings)
+      const data = res.data
 
-    setDraftSpendings(data)
-    setGlobalError(null)
-    setIsEditing(false)
-    handleUpdateItemSpending(itemId, data)
-    toast.success('Update a spending list successfully')
+      setDraftSpendings(data)
+      setGlobalError(null)
+      setIsEditing(false)
+      handleUpdateItemSpending(itemId, data)
+      toast.success('Update a spending list successfully')
+    } catch (e: any) {
+      //
+    }
   }
 
   const handleCancel = () => {
@@ -121,7 +129,7 @@ export default function ItemSpending({ itemId, spendings, canModified, handleUpd
 
   return (
     <div className='-mt-2 rounded-b-lg bg-blue-300 p-4 shadow-md'>
-      {draftSpendings.length > 0 || isClickOnCreateText ? (
+      {spendings.length > 0 || isClickOnCreateText ? (
         <>
           <div className='mb-3 flex items-center justify-between px-2'>
             <h2 className='text-xl font-bold text-gray-800'>Spending List</h2>
