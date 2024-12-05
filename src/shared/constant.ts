@@ -285,3 +285,50 @@ export const CategoryIcon = [
   { name: 'bell', icon: faBell },
   { name: 'baseball', icon: faBaseball }
 ]
+
+export const BANK_LIST = [
+  {
+    name: 'TMCP Công thương Việt Nam',
+    shortName: 'VietinBank'
+  },
+  {
+    name: 'TMCP Ngoại Thương Việt Nam',
+    shortName: 'Vietcombank'
+  },
+  {
+    name: 'TMCP Đầu tư và Phát triển Việt Nam',
+    shortName: 'BIDV'
+  },
+  {
+    name: 'Nông nghiệp và Phát triển Nông thôn Việt Nam',
+    shortName: 'Agribank'
+  },
+  {
+    name: 'TMCP Phương Đông',
+    shortName: 'OCB'
+  },
+  {
+    name: 'TMCP Quân đội',
+    shortName: 'MBBank'
+  },
+  {
+    name: 'TMCP Kỹ thương Việt Nam',
+    shortName: 'Techcombank'
+  },
+  {
+    name: 'TMCP Á Châu',
+    shortName: 'ACB'
+  },
+  {
+    name: 'TMCP Việt Nam Thịnh Vượng',
+    shortName: 'VPBank'
+  },
+  {
+    name: 'TMCP Tiên Phong',
+    shortName: 'TPBank'
+  },
+  {
+    name: 'TMCP Sài Gòn Thương Tín',
+    shortName: 'Sacombank'
+  }
+]
