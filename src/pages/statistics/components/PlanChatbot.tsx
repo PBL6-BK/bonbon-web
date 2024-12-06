@@ -22,12 +22,13 @@ export interface Option {
 
 export interface Question {
   text: string
-  options?: { label: string; nextQuestionIndex: number }[]
+  options?: Option[]
   validator?: (input: string) => boolean
   errorMessage?: string
   key?: string
   nextQuestionIndex?: number
   replay?: boolean
+  anotherOptions?: Option[]
 }
 
 const questions: Question[] = [
@@ -51,13 +52,21 @@ const questions: Question[] = [
     text: 'What type of modifications are you considering?',
     key: 'message',
     nextQuestionIndex: -1,
-    replay: true
+    replay: true,
+    anotherOptions: [
+      { label: 'Suggest budget decision', nextQuestionIndex: 1 },
+      { label: 'Ask about finance', nextQuestionIndex: 3 }
+    ]
   },
   {
     text: 'What financial information do you want to ask about?',
     key: 'message',
     nextQuestionIndex: -1,
-    replay: true
+    replay: true,
+    anotherOptions: [
+      { label: 'Suggest budget decision', nextQuestionIndex: 1 },
+      { label: 'Suggest budget modification', nextQuestionIndex: 2 }
+    ]
   }
 ]
 
@@ -75,13 +84,14 @@ export default function PlanChatbot({ onClose }: Props) {
   const [displayedText, setDisplayedText] = useState('')
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0)
   const [showOptions, setShowOptions] = useState(false)
+  const [showAnotherOptions, setShowAnotherOptions] = useState(false)
   const [loading, setLoading] = useState(false)
   const userResponses = useRef<{ [key: string]: string }>({})
   const userOption = useRef<string>()
 
   const bottomRef = useRef<HTMLDivElement>(null)
 
-  const handleUserResponse = (option?: Option, input?: string) => {
+  const handleUserResponse = async (option?: Option, input?: string) => {
     let nextIndex = currentQuestionIndex
 
     if (option) {
@@ -89,6 +99,8 @@ export default function PlanChatbot({ onClose }: Props) {
     } else if (input) {
       nextIndex = handleUserInput(input)
     }
+
+    setUserInput('')
 
     if (nextIndex != -1) {
       displayMessageWordByWord(questions[nextIndex].text)
@@ -100,21 +112,22 @@ export default function PlanChatbot({ onClose }: Props) {
         displayMessageWordByWord('This is a spending plan for you.')
         generateSpendingPlan()
       } else if (userOption.current === 'Suggest budget modification') {
-        suggestBudgetModification()
+        await suggestBudgetModification()
+        setShowAnotherOptions(true)
       } else if (userOption.current === 'Ask about finance') {
-        answerQuestions()
+        await answerQuestions()
+        setShowAnotherOptions(true)
       } else {
         displayMessageWordByWord('Alright, whenever you need, don’t hesitate to ask me—I’ll be here to help you. 🥰')
       }
     }
     setCurrentQuestionIndex(nextIndex)
-    setUserInput('')
   }
 
   const handleUserOption = (option: Option) => {
+    setShowOptions(false)
     userOption.current = option.label
     setMessages((prevMessages) => [...prevMessages, { text: option.label, sender: 'user', type: 'text' }])
-    setShowOptions(false)
 
     return option.nextQuestionIndex
   }
@@ -257,7 +270,7 @@ export default function PlanChatbot({ onClose }: Props) {
             </div>
           )}
           {currentQuestionIndex >= 0 && currentQuestionIndex < questions.length
-            ? showOptions && (
+            ? (showOptions || currentQuestionIndex === 0) && (
                 <div className='mt-3 flex flex-wrap justify-center'>
                   {questions[currentQuestionIndex].options?.map((option, idx) => {
                     return (
@@ -280,6 +293,24 @@ export default function PlanChatbot({ onClose }: Props) {
           {loading && (
             <div className='mt-3 text-center'>
               <ThreeDot variant='pulsate' color='#32cd32' size='small' text='' textColor='' />
+            </div>
+          )}
+          {showAnotherOptions && (
+            <div className='mt-3 flex justify-center gap-4'>
+              {questions[currentQuestionIndex].anotherOptions?.map((option, idx) => (
+                <button
+                  key={idx}
+                  onClick={() => {
+                    setShowAnotherOptions(false)
+                    handleUserResponse(option)
+                  }}
+                  className={`rounded-md border-none p-2 font-semibold text-gray-900 ${
+                    colors[idx % colors.length]
+                  } hover:cursor-pointer`}
+                >
+                  {option.label}
+                </button>
+              ))}
             </div>
           )}
           <div ref={bottomRef}></div>

@@ -9,7 +9,6 @@ import {
   setRefreshTokenToLS
 } from './auth'
 import config from '../configs'
-import HttpStatusCode from 'src/constants/httpStatusCode.enum'
 import { ErrorResponse } from 'src/types/utils.type'
 import { RefreshTokenResponse } from 'src/types/auth.type'
 import { URL_LOGIN, URL_LOGOUT, URL_REFRESH_TOKEN, URL_REGISTER } from 'src/apis/auth.api'
