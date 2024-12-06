@@ -26,23 +26,48 @@ export interface Question {
   validator?: (input: string) => boolean
   errorMessage?: string
   key?: string
+  nextQuestionIndex?: number
+  replay?: boolean
 }
 
 const questions: Question[] = [
   {
-    text: `Hello 😊! Would you like me to create a spending plan for you?`,
+    text: `Hello, I am Bonni 😊! How can I help you today?`,
     options: [
-      { label: 'Yes', nextQuestionIndex: 1 },
-      { label: 'No', nextQuestionIndex: -1 }
+      { label: 'Suggest budget decision', nextQuestionIndex: 1 },
+      { label: 'Suggest budget modification', nextQuestionIndex: 2 },
+      { label: 'Ask about finance', nextQuestionIndex: 3 },
+      { label: 'I do not need any help', nextQuestionIndex: -1 }
     ]
   },
   {
     text: 'How many percentages do you want to save next month? 💰',
     validator: (input) => !isNaN(Number(input)) && Number(input) >= 0 && Number(input) <= 100,
     errorMessage: 'Please tell me a number from 0 to 100 😉',
-    key: 'savings'
+    key: 'savings',
+    nextQuestionIndex: -1
+  },
+  {
+    text: 'What type of modifications are you considering?',
+    key: 'message',
+    nextQuestionIndex: -1,
+    replay: true
+  },
+  {
+    text: 'What financial information do you want to ask about?',
+    key: 'message',
+    nextQuestionIndex: -1,
+    replay: true
   }
 ]
+
+const colors = [
+  'bg-gradient-to-r from-purple-400 to-pink-500',
+  'bg-gradient-to-r from-yellow-400 to-orange-500',
+  'bg-gradient-to-r from-blue-400 to-cyan-500',
+  'bg-gradient-to-r from-green-400 to-lime-500'
+]
+const icons = ['💡', '✏️', '🖐️', '👋']
 
 export default function PlanChatbot({ onClose }: Props) {
   const [messages, setMessages] = useState<Message[]>([])
@@ -52,6 +77,7 @@ export default function PlanChatbot({ onClose }: Props) {
   const [showOptions, setShowOptions] = useState(false)
   const [loading, setLoading] = useState(false)
   const userResponses = useRef<{ [key: string]: string }>({})
+  const userOption = useRef<string>()
 
   const bottomRef = useRef<HTMLDivElement>(null)
 
@@ -64,24 +90,29 @@ export default function PlanChatbot({ onClose }: Props) {
       nextIndex = handleUserInput(input)
     }
 
+    if (nextIndex != -1) {
+      displayMessageWordByWord(questions[nextIndex].text)
+    } else {
+      if (questions[currentQuestionIndex].replay) {
+        nextIndex = currentQuestionIndex
+      }
+      if (userOption.current === 'Suggest budget decision') {
+        displayMessageWordByWord('This is a spending plan for you.')
+        generateSpendingPlan()
+      } else if (userOption.current === 'Suggest budget modification') {
+        suggestBudgetModification()
+      } else if (userOption.current === 'Ask about finance') {
+        answerQuestions()
+      } else {
+        displayMessageWordByWord('Alright, whenever you need, don’t hesitate to ask me—I’ll be here to help you. 🥰')
+      }
+    }
     setCurrentQuestionIndex(nextIndex)
     setUserInput('')
-
-    if (nextIndex === currentQuestionIndex) {
-      return
-    }
-
-    if (nextIndex === -1) {
-      displayMessageWordByWord('Alright, whenever you need, don’t hesitate to ask me—I’ll be here to help you. 🥰')
-    } else if (nextIndex === questions.length) {
-      displayMessageWordByWord('This is a spending plan for you.')
-      generateSpendingPlan()
-    } else {
-      displayMessageWordByWord(questions[nextIndex].text)
-    }
   }
 
   const handleUserOption = (option: Option) => {
+    userOption.current = option.label
     setMessages((prevMessages) => [...prevMessages, { text: option.label, sender: 'user', type: 'text' }])
     setShowOptions(false)
 
@@ -111,7 +142,7 @@ export default function PlanChatbot({ onClose }: Props) {
       }
     }
 
-    return currentQuestionIndex + 1
+    return currentQuestion.nextQuestionIndex || currentQuestionIndex + 1
   }
 
   const generateSpendingPlan = async () => {
@@ -129,23 +160,52 @@ export default function PlanChatbot({ onClose }: Props) {
     setLoading(false)
   }
 
-  const displayMessageWordByWord = (fullText: string) => {
-    const words = fullText.split(' ')
-    let index = -1
+  const suggestBudgetModification = async () => {
+    setLoading(true)
+    const res = await aiAssistanceApi.suggestBudgetModification(userResponses.current.message)
+    const data = res.data
+    const categoryMsg: Message[] = []
+    const categoryList = data['response']['detailed_advice']
 
-    const interval = setInterval(() => {
-      if (index < words.length - 1) {
-        index++
-        setDisplayedText((prevText) => prevText + words[index] + ' ')
-      } else {
-        clearInterval(interval)
-        setMessages((prevMessages) => [...prevMessages, { text: fullText, sender: 'bot', type: 'text' }])
-        setDisplayedText('')
+    categoryList.forEach((category: CategoryData) => {
+      categoryMsg.push({ text: category, sender: 'bot', type: 'card' })
+    })
 
-        const currentQuestion = questions[currentQuestionIndex]
-        if (currentQuestion?.options) setShowOptions(true)
-      }
-    }, 20)
+    await displayMessageWordByWord(data['response']['key_advice'])
+    setMessages((prevMessages) => [...prevMessages, ...categoryMsg])
+    setLoading(false)
+  }
+
+  const answerQuestions = async () => {
+    setLoading(true)
+    const res = await aiAssistanceApi.ask(userResponses.current.message)
+    const data = res.data
+
+    await displayMessageWordByWord(data['response']['key_advice'])
+    setLoading(false)
+  }
+
+  const displayMessageWordByWord = (fullText: string): Promise<void> => {
+    return new Promise((resolve) => {
+      const words = fullText.split(' ')
+      let index = -1
+
+      const interval = setInterval(() => {
+        if (index < words.length - 1) {
+          index++
+          setDisplayedText((prevText) => prevText + words[index] + ' ')
+        } else {
+          clearInterval(interval)
+          setMessages((prevMessages) => [...prevMessages, { text: fullText, sender: 'bot', type: 'text' }])
+          setDisplayedText('')
+
+          const currentQuestion = questions[currentQuestionIndex]
+          if (currentQuestion?.options) setShowOptions(true)
+
+          resolve()
+        }
+      }, 20)
+    })
   }
 
   useEffect(() => {
@@ -198,16 +258,22 @@ export default function PlanChatbot({ onClose }: Props) {
           )}
           {currentQuestionIndex >= 0 && currentQuestionIndex < questions.length
             ? showOptions && (
-                <div className='mt-3 flex justify-center gap-4'>
-                  {questions[currentQuestionIndex].options?.map((option, idx) => (
-                    <button
-                      key={idx}
-                      onClick={() => handleUserResponse(option)}
-                      className='h-10 w-16 rounded-full border-none bg-green-400 px-4 py-2 text-white hover:cursor-pointer hover:bg-green-500'
-                    >
-                      {option.label}
-                    </button>
-                  ))}
+                <div className='mt-3 flex flex-wrap justify-center'>
+                  {questions[currentQuestionIndex].options?.map((option, idx) => {
+                    return (
+                      <div key={idx} className='mb-3 flex w-1/2 justify-center'>
+                        <button
+                          onClick={() => handleUserResponse(option)}
+                          className={`flex h-24 w-11/12 items-center justify-center rounded-lg ${
+                            colors[idx % colors.length]
+                          } gap-2 border-none px-6 py-3 font-semibold text-white  shadow-md transition-transform duration-200 hover:scale-105 hover:cursor-pointer hover:shadow-lg`}
+                        >
+                          <span className='text-2xl'>{icons[idx % icons.length]}</span>
+                          {option.label}
+                        </button>
+                      </div>
+                    )
+                  })}
                 </div>
               )
             : null}

@@ -48,12 +48,18 @@ const PrivateLayoutSidebar: FC<PrivateLayoutSidebarProps> = ({ isCollapsed = fal
         defaultSelectedKeys={['members']}
         selectedKeys={[selectedKey]}
         style={{ height: '100%', borderRight: 0 }}
-        items={SIDEBAR_OPTIONS.map((item) => ({
-          ...item,
-          label: <Link to={item.path}>{item.label}</Link>,
-          icon: <Icon icon={item.icon} />
-        }))}
-      />
+        // items={SIDEBAR_OPTIONS.map((item) => ({
+        //   ...item,
+        //   label: <Link to={item.path}>{item.label}</Link>,
+        //   icon: <Icon icon={item.icon} />
+        // }))}
+      >
+        {SIDEBAR_OPTIONS.map((item) => (
+          <Menu.Item key={item.key} icon={<Icon icon={item.icon} />} onClick={() => setSelectedKey(item.key)}>
+            <Link to={item.path}>{item.label}</Link>
+          </Menu.Item>
+        ))}
+      </Menu>
       {isCollapsed ? 'true' : 'false'}
     </>
   )
