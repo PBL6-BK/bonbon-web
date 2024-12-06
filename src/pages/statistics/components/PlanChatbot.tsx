@@ -116,7 +116,7 @@ export default function PlanChatbot({ onClose }: Props) {
 
   const generateSpendingPlan = async () => {
     setLoading(true)
-    const res = await aiAssistanceApi.getSuggestionPlan(Number(userResponses.current.savings))
+    const res = await aiAssistanceApi.suggestBudgetDecision(Number(userResponses.current.savings))
     const data = res.data
     const categoryList = data['response']['savings_plan']['recommendations']
     const categoryMsg: Message[] = []
