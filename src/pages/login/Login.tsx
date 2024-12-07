@@ -52,9 +52,6 @@ export default function Home() {
       <div className='hidden flex-1 p-8 lg:block'>
         <div className='relative h-full w-full overflow-hidden rounded-xl'>
           <div className='absolute h-full w-full bg-black bg-opacity-5'></div>
-          <div className='absolute bottom-0 left-0 w-3/4 p-5 font-display text-4xl font-bold leading-[130%] text-white'>
-            BonBon Application, help you to manage your money 🤑
-          </div>
           <img className='h-full w-full object-cover' src={LoginImg} alt='' />
         </div>
       </div>
