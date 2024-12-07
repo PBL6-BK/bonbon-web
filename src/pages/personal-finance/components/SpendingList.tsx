@@ -64,7 +64,7 @@ export default function SpendingList({
   }
 
   const handleDeleteSpendingList = async (spending: SpendingDetail) => {
-    const res = await spendingApi.deleteSpending(spending.id)
+    await spendingApi.deleteSpending(spending.id)
     onDeleteSpending(spending)
     reloadCategories()
     toast.success('Delete spending successfully')

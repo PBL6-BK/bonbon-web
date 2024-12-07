@@ -33,7 +33,7 @@ export default function CategoryList({ income }: { income: number }) {
   }
 
   const handleUpdateCategory = async (id: number, category: CategoryDetail) => {
-    const res = await categoryApi.updateCategory(id, category)
+    await categoryApi.updateCategory(id, category)
     const newCategory = { ...category, id: id }
     const newCategoryList = categoryList.map((item) => {
       if (item.id === newCategory.id) {

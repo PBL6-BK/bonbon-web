@@ -3,7 +3,7 @@ import Balance from './components/Balance'
 import CategoryList from './components/CategoryList'
 import SpendingList, { FilterType } from './components/SpendingList'
 import { SpendingDetail } from 'src/types/spending.type'
-import { CategoryProvider, useCategory } from 'src/contexts/category.context'
+import { CategoryProvider } from 'src/contexts/category.context'
 import spendingApi from 'src/apis/spending.api'
 import DoughnutChart from './components/DoughnutChart'
 
@@ -121,7 +121,7 @@ export default function PersonalFinance() {
 
   return (
     <CategoryProvider>
-      <div className='scrollbar-hide m-1 flex grid min-h-full grid-cols-12 gap-5 overflow-y-auto rounded-2xl bg-white p-5 py-2'>
+      <div className='scrollbar-hide m-1 grid min-h-full grid-cols-12 gap-5 overflow-y-auto rounded-2xl bg-white p-5 py-2'>
         <div className='col-span-5 flex flex-col gap-5'>
           <div className='flex w-full items-center gap-3'>
             <Balance balance={balance} />

@@ -1,6 +1,6 @@
 import { faXmark } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { useRef, useState } from 'react'
+import { useRef } from 'react'
 import { CategoryIcon } from 'src/shared/constant'
 import { CategoryDetail } from 'src/types/category.type'
 import CategoryForm from './CategoryForm'
@@ -15,7 +15,6 @@ interface Props {
 }
 
 export default function CategoryItem({ category, categoryList, income, onUpdateCategory }: Props) {
-  const [isMenuOpen, setIsMenuOpen] = useState(false)
   const modalRef = useRef<IFormModalRef>(null)
   const [editForm] = Form.useForm()
 
@@ -30,10 +29,6 @@ export default function CategoryItem({ category, categoryList, income, onUpdateC
       : usedPercentage > 100
       ? 'bg-red-600'
       : 'bg-green-600'
-
-  const toggleMenu = () => {
-    setIsMenuOpen((prev) => !prev)
-  }
 
   const useFieldValue = (fieldName: string, form: FormInstance) => {
     return Form.useWatch(fieldName, form)
@@ -51,64 +46,49 @@ export default function CategoryItem({ category, categoryList, income, onUpdateC
   }
 
   return (
-    <div className='mb-5 flex shrink-0 grow-0 basis-1/3 flex-col items-center gap-1'>
+    <>
       <div
-        className='relative flex h-16 w-16 items-center justify-center rounded-full bg-white hover:cursor-pointer'
-        onMouseEnter={toggleMenu}
-        onMouseLeave={toggleMenu}
+        role='button'
+        tabIndex={0}
+        className='mb-5 flex shrink-0 grow-0 basis-1/3 flex-col items-center gap-1 hover:scale-110 hover:cursor-pointer'
+        onClick={() => modalRef.current?.showModal()}
+        onKeyDown={(e) => {
+          if (e.key === 'Enter' || e.key === ' ') {
+            modalRef.current?.showModal()
+          }
+        }}
       >
-        <FontAwesomeIcon icon={CategoryIcon.find((item) => item.name === category.icon)?.icon || faXmark} size='2x' />
-
-        {/* Liquid wave effect */}
-        <div className='absolute inset-0 flex items-end overflow-hidden rounded-full'>
-          <div
-            className={`absolute w-full ${progressColor}`}
-            style={{
-              height: `${usedPercentage}%`,
-              opacity: 0.4
-            }}
-          />
-        </div>
-        <CategoryForm
-          modalRef={modalRef}
-          form={editForm}
-          categoryList={categoryList}
-          formData={category}
-          income={income}
-          title='Edit category'
-          handleCancel={modalRef.current?.closeModal}
-          handleSubmit={handleUpdateCategory}
-        />
-        {isMenuOpen && (
-          <div
-            className='absolute right-0 top-5 z-10 mt-2 w-28 rounded-md bg-white p-2 shadow-lg'
-            role='menu'
-            tabIndex={0}
-          >
-            <ul>
-              <li className='cursor-pointer p-2 hover:bg-gray-200'>
-                <button
-                  className='w-full cursor-pointer border-none bg-inherit text-left text-xl'
-                  onClick={() => modalRef.current?.showModal()}
-                >
-                  Edit
-                </button>
-              </li>
-              <li className='cursor-pointer p-2 hover:bg-gray-200'>
-                <button className='cursor-pointer border-none bg-inherit text-xl'>Delete</button>
-              </li>
-            </ul>
+        <div className='relative flex h-16 w-16 items-center justify-center rounded-full bg-white'>
+          <FontAwesomeIcon icon={CategoryIcon.find((item) => item.name === category.icon)?.icon || faXmark} size='2x' />
+          <div className='absolute inset-0 flex items-end overflow-hidden rounded-full'>
+            <div
+              className={`absolute w-full ${progressColor}`}
+              style={{
+                height: `${usedPercentage}%`,
+                opacity: 0.4
+              }}
+            />
           </div>
-        )}
-      </div>
+        </div>
 
-      {/* Category details */}
-      <div className='flex flex-col items-center'>
-        <span className='text-md font-bold'>{category.name}</span>
-        <span className='text-md text-gray-500'>
-          {parseFloat(spendingAmount.toFixed(2))}/{parseFloat(maxSpendingAmount.toFixed(2))}
-        </span>
+        <div className='flex flex-col items-center'>
+          <span className='text-md font-bold'>{category.name}</span>
+          <span className='text-md text-gray-500'>
+            {parseFloat(spendingAmount.toFixed(2)).toLocaleString()}/
+            {parseFloat(maxSpendingAmount.toFixed(2)).toLocaleString()}
+          </span>
+        </div>
       </div>
-    </div>
+      <CategoryForm
+        modalRef={modalRef}
+        form={editForm}
+        categoryList={categoryList}
+        formData={category}
+        income={income}
+        title='Edit category'
+        handleCancel={modalRef.current?.closeModal}
+        handleSubmit={handleUpdateCategory}
+      />
+    </>
   )
 }

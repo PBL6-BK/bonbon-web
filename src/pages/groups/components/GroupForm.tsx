@@ -127,7 +127,7 @@ export default function GroupForm({ title, modalRef, form, formData, handleSubmi
         >
           <Select style={{ width: 120 }}>
             <Option value={Currency.VND}>VND</Option>
-            <Option value={Currency.USD}>USD</Option>
+            {/* <Option value={Currency.USD}>USD</Option> */}
           </Select>
         </Form.Item>
       </FormModal>

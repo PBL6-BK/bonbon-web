@@ -87,7 +87,6 @@ export default function GroupList() {
       const res = await groupApi.getAllGroups()
       const data = res.data
       setGroups(data['results'] || [])
-      console.log(data['results'])
     }
     getUserGroups()
   }, [])

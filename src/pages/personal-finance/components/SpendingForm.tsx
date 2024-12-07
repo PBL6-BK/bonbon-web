@@ -50,7 +50,7 @@ export default function TransactionForm({ title, modalRef, form, formData, handl
                   <Form.Item name='currency' initialValue={formData ? formData.currency : Currency.VND} noStyle>
                     <Select style={{ width: 60 }}>
                       <Option value={Currency.VND}>đ</Option>
-                      <Option value={Currency.USD}>$</Option>
+                      {/* <Option value={Currency.USD}>$</Option> */}
                     </Select>
                   </Form.Item>
                 }

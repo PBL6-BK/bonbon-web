@@ -53,7 +53,7 @@ export default function DoughnutChart({ income, outcome }: Props) {
   }
 
   return (
-    <div className='relative flex h-36 w-6/12 flex-col items-center justify-center justify-self-center rounded-2xl bg-cover bg-center text-center'>
+    <div className='relative flex h-40 w-6/12 flex-col items-center justify-center justify-self-center rounded-2xl bg-cover bg-center text-center'>
       <Doughnut data={data} options={options} plugins={[centerTextPlugin]} />
     </div>
   )

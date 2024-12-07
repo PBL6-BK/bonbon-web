@@ -1,6 +1,6 @@
-import { faEllipsisV, faXmark } from '@fortawesome/free-solid-svg-icons'
+import { faPenToSquare, faTrashCan, faXmark } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { useRef, useState } from 'react'
+import { useRef } from 'react'
 import { SpendingDetail } from 'src/types/spending.type'
 import { convertCurrencyToSymbol, formatNumberWithLocale } from 'src/utils/tools'
 import { IFormModalRef } from 'src/components/common/FormModal'
@@ -15,7 +15,6 @@ interface Props {
 }
 
 export default function Spending({ spending, onDeleteSpending, onUpdateSpending }: Props) {
-  const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [form] = Form.useForm()
   const modalRef = useRef<IFormModalRef>(null)
 
@@ -37,63 +36,38 @@ export default function Spending({ spending, onDeleteSpending, onUpdateSpending 
     onUpdateSpending(spending.id, newSpending)
   }
 
-  const toggleMenu = () => {
-    setIsMenuOpen((prev) => !prev)
-  }
-
   return (
-    <li className='relative my-3 grid grid-cols-9 items-center rounded-2xl border-none bg-green-400 p-5 text-xl'>
+    <li className='relative my-3 grid grid-cols-9 items-center rounded-2xl border-none bg-green-400 p-5 text-lg'>
       <FontAwesomeIcon
         icon={CategoryIcon.find((item) => item.name === spending.category_icon)?.icon || faXmark}
         size='2x'
       />
-      <span className='col-span-3 truncate text-2xl font-bold'>{spending.name}</span>
+      <span className='col-span-3 truncate text-xl font-bold'>{spending.name}</span>
       <span className='col-span-2 truncate text-center italic text-gray-500'>{spending.time.toLocaleString()}</span>
       <span className='col-span-2 truncate text-center font-bold'>
         {spending.type === 'INCOME' ? '+' : '-'}
         {`${formatNumberWithLocale(spending.amount)}${convertCurrencyToSymbol(spending.currency)}`}
       </span>
-      <div
-        className='relative col-span-1 text-right hover:cursor-pointer'
-        onMouseEnter={toggleMenu}
-        onMouseLeave={toggleMenu}
-      >
-        <SpendingForm
-          title='Edit transaction'
-          modalRef={modalRef}
-          form={form}
-          formData={spending}
-          handleCancel={modalRef.current?.closeModal}
-          handleSubmit={handleUpdateSpending}
+      <div className='flex items-center gap-4'>
+        <FontAwesomeIcon
+          icon={faPenToSquare}
+          className='hover:cursor-pointer'
+          onClick={() => modalRef.current?.showModal()}
         />
-        <FontAwesomeIcon icon={faEllipsisV} size='lg' className='hover:cursor-pointer' onClick={toggleMenu} />
-        {isMenuOpen && (
-          <div
-            className='absolute right-0 top-2 z-10 mt-2 w-36 rounded-md bg-white p-2 shadow-lg'
-            role='menu'
-            tabIndex={0}
-          >
-            <ul>
-              <li className='cursor-pointer p-2 hover:bg-gray-200'>
-                <button
-                  className='w-full cursor-pointer border-none bg-inherit text-left text-xl'
-                  onClick={modalRef.current?.showModal}
-                >
-                  Edit
-                </button>
-              </li>
-              <li className='cursor-pointer p-2 hover:bg-gray-200'>
-                <button
-                  className='w-full cursor-pointer border-none bg-inherit text-left text-xl'
-                  onClick={() => onDeleteSpending(spending)}
-                >
-                  Delete
-                </button>
-              </li>
-            </ul>
-          </div>
-        )}
+        <FontAwesomeIcon
+          icon={faTrashCan}
+          className='hover:cursor-pointer'
+          onClick={() => onDeleteSpending(spending)}
+        />
       </div>
+      <SpendingForm
+        title='Edit transaction'
+        modalRef={modalRef}
+        form={form}
+        formData={spending}
+        handleCancel={modalRef.current?.closeModal}
+        handleSubmit={handleUpdateSpending}
+      />
     </li>
   )
 }
