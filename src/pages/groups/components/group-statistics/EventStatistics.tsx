@@ -3,9 +3,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { DatePicker, Form, Select } from 'antd'
 import dayjs from 'dayjs'
 import { Dispatch, SetStateAction, useEffect, useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { OrbitProgress } from 'react-loading-indicators'
 import groupApi from 'src/apis/group.api'
-import { PATH_URL } from 'src/constants/path'
 import { useFieldValue } from 'src/shared/hook'
 
 interface GroupEvent {
@@ -24,6 +23,7 @@ interface Props {
 export default function EventStatistics({ groupId, setSelectedEventId }: Props) {
   const [events, setEvents] = useState<GroupEvent[]>([])
   const [form] = Form.useForm()
+  const [isLoading, setIsLoading] = useState(false)
 
   const formValue = {
     year: useFieldValue('year', form),
@@ -33,16 +33,20 @@ export default function EventStatistics({ groupId, setSelectedEventId }: Props) 
   const handleChangeForm = () => {
     if (formValue.type === 0) {
       const getRecentEvents = async () => {
+        setIsLoading(true)
         const res = await groupApi.getRecentEvent(Number(groupId), formValue.year?.year() || dayjs().year())
         const data = res.data
         setEvents(data)
+        setIsLoading(false)
       }
       getRecentEvents()
     } else {
       const getTopSpending = async () => {
+        setIsLoading(true)
         const res = await groupApi.getTopEvent(Number(groupId), formValue.year?.year() || dayjs().year())
         const data = res.data
         setEvents(data)
+        setIsLoading(false)
       }
       getTopSpending()
     }
@@ -73,7 +77,11 @@ export default function EventStatistics({ groupId, setSelectedEventId }: Props) 
       </div>
 
       <div className='scrollbar-hide flex h-[25rem] w-full flex-col justify-center overflow-y-auto rounded-lg bg-gray-300 px-5 py-2 hover:cursor-pointer'>
-        {events.length > 0 ? (
+        {isLoading ? (
+          <div className='flex h-full w-full items-center justify-center'>
+            <OrbitProgress color='#32cd32' size='medium' text='' textColor='' />
+          </div>
+        ) : events.length > 0 ? (
           events.map((event, index) => (
             <div
               key={event.id}

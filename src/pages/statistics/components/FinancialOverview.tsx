@@ -5,6 +5,7 @@ import { DatePicker, Form } from 'antd'
 import dayjs from 'dayjs'
 import statisticsApi from 'src/apis/statistics.api'
 import { useFieldValue } from 'src/shared/hook'
+import { OrbitProgress } from 'react-loading-indicators'
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title)
 
@@ -12,6 +13,7 @@ export default function FinancialOverview() {
   const [incomeData, setIncomeData] = useState()
   const [outcomeData, setOutcomeData] = useState()
   const [form] = Form.useForm()
+  const [isLoading, setIsLoading] = useState(false)
 
   const year = useFieldValue('year', form)
 
@@ -63,10 +65,15 @@ export default function FinancialOverview() {
 
   useEffect(() => {
     const getFinancialOverview = async () => {
-      const res = await statisticsApi.financialOverview(year?.year() || dayjs().year())
-      const data = res.data
-      setIncomeData(data['income'])
-      setOutcomeData(data['outcome'])
+      setIsLoading(true)
+      try {
+        const res = await statisticsApi.financialOverview(year?.year() || dayjs().year())
+        const data = res.data
+        setIncomeData(data['income'])
+        setOutcomeData(data['outcome'])
+      } finally {
+        setIsLoading(false)
+      }
     }
     getFinancialOverview()
   }, [year])
@@ -82,7 +89,12 @@ export default function FinancialOverview() {
         </Form>
       </div>
       <div className='h-full'>
-        <Bar data={data} options={options} />
+        {!isLoading && <Bar data={data} options={options} />}
+        {isLoading && (
+          <div className='flex h-full w-full items-center justify-center'>
+            <OrbitProgress color='#32cd32' size='medium' text='' textColor='' />
+          </div>
+        )}
       </div>
     </>
   )

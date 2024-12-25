@@ -1,5 +1,4 @@
 import { useEffect, useRef, useState } from 'react'
-import { useParams } from 'react-router-dom'
 import groupApi from 'src/apis/group.api'
 import { faPlus } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -10,6 +9,7 @@ import { useFieldValue } from 'src/shared/hook'
 import EventItem from './EventItem'
 import type { EventItem as EventItemType, GroupSpending } from 'src/types/group.type'
 import GroupEventForm from '../GroupEventForm'
+import { OrbitProgress } from 'react-loading-indicators'
 
 interface Props {
   eventId: number
@@ -19,6 +19,7 @@ export default function EventItemList({ eventId, canModified }: Props) {
   const [items, setItems] = useState<EventItemType[]>([])
   const modalRef = useRef<IFormModalRef>(null)
   const [addForm] = Form.useForm()
+  const [isLoading, setIsLoading] = useState(false)
 
   const newItem = {
     event_id: eventId,
@@ -49,12 +50,15 @@ export default function EventItemList({ eventId, canModified }: Props) {
   }
 
   useEffect(() => {
-    console.log('EventItemList', eventId)
     const getItems = async () => {
-      const res = await groupApi.getAllItemsOfEvent(eventId)
-      const data = res.data
-      setItems(data['results'])
-      console.log(data['results'])
+      setIsLoading(true)
+      try {
+        const res = await groupApi.getAllItemsOfEvent(eventId)
+        const data = res.data
+        setItems(data['results'])
+      } finally {
+        setIsLoading(false)
+      }
     }
     getItems()
   }, [eventId])
@@ -62,16 +66,22 @@ export default function EventItemList({ eventId, canModified }: Props) {
   return (
     <>
       <div className='scrollbar-hide flex h-[29rem] flex-col gap-5 overflow-y-auto bg-white p-5'>
-        {items.map((item) => (
-          <EventItem
-            key={item.id}
-            eventItem={item}
-            canModified={canModified}
-            handleUpdate={handleUpdateItem}
-            handleDelete={() => handleDeleteItem(item.id)}
-            handleUpdateItemSpending={handleUpdateItemSpending}
-          />
-        ))}
+        {!isLoading &&
+          items.map((item) => (
+            <EventItem
+              key={item.id}
+              eventItem={item}
+              canModified={canModified}
+              handleUpdate={handleUpdateItem}
+              handleDelete={() => handleDeleteItem(item.id)}
+              handleUpdateItemSpending={handleUpdateItemSpending}
+            />
+          ))}
+        {isLoading && (
+          <div className='flex h-full w-full items-center justify-center'>
+            <OrbitProgress color='#32cd32' size='medium' text='' textColor='' />
+          </div>
+        )}
       </div>
 
       <div className='fixed bottom-10 right-10 z-50 m-3 flex flex-col items-center'>

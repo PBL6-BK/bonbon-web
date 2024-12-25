@@ -15,7 +15,7 @@ const centerTextPlugin = {
     ctx.save()
 
     // Custom title text
-    const titleText = 'Nov, 2024'
+    const titleText = 'Dec, 2024'
 
     // Font settings
     ctx.font = 'bold 12px Arial'

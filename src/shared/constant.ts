@@ -125,16 +125,16 @@ export const SIDEBAR_OPTIONS = [
     icon: 'fa:money'
   },
   {
-    key: 'groups',
-    label: 'Groups',
-    path: '/groups',
-    icon: 'fa:group'
-  },
-  {
     key: 'statistics',
     label: 'Statistics',
     path: '/statistics',
     icon: 'fa:bar-chart'
+  },
+  {
+    key: 'groups',
+    label: 'Groups',
+    path: '/groups',
+    icon: 'fa:group'
   }
 ]
 

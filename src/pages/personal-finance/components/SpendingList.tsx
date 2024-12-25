@@ -10,6 +10,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { CategoryIcon } from 'src/shared/constant'
 import SpendingForm from './SpendingForm'
 import { useCategory } from 'src/contexts/category.context'
+import { OrbitProgress } from 'react-loading-indicators'
 
 export interface FilterType {
   time: string
@@ -22,6 +23,7 @@ interface Props {
   onUpdateSpending: (spending: SpendingDetail) => void
   onDeleteSpending: (spending: SpendingDetail) => void
   onFilterSpending: (filter: FilterType) => void
+  isLoading: boolean
 }
 
 export default function SpendingList({
@@ -29,7 +31,8 @@ export default function SpendingList({
   onAddSpending,
   onUpdateSpending,
   onDeleteSpending,
-  onFilterSpending
+  onFilterSpending,
+  isLoading
 }: Props) {
   const { categoryList, reloadCategories } = useCategory()
   const modalRef = useRef<IFormModalRef>(null)
@@ -134,14 +137,20 @@ export default function SpendingList({
         </div>
       </div>
       <ul className='scrollbar-hide m-1 flex h-full w-full flex-col overflow-y-auto rounded-2xl border-none bg-zinc-300 p-5'>
-        {spendingList.map((spending: SpendingDetail) => (
-          <Spending
-            spending={spending}
-            key={spending.id}
-            onDeleteSpending={handleDeleteSpendingList}
-            onUpdateSpending={handleUpdateSpending}
-          />
-        ))}
+        {!isLoading &&
+          spendingList.map((spending: SpendingDetail) => (
+            <Spending
+              spending={spending}
+              key={spending.id}
+              onDeleteSpending={handleDeleteSpendingList}
+              onUpdateSpending={handleUpdateSpending}
+            />
+          ))}
+        {isLoading && (
+          <div className='flex h-full w-full items-center justify-center'>
+            <OrbitProgress color='#32cd32' size='medium' text='' textColor='' />
+          </div>
+        )}
       </ul>
     </>
   )

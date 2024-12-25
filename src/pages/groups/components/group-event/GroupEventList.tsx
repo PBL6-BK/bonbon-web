@@ -12,12 +12,14 @@ import { toast } from 'react-toastify'
 import { useFieldValue } from 'src/shared/hook'
 import GroupEventDetail from './GroupEventDetail'
 import GroupStatistics from '../group-statistics/GroupStatistics'
+import { OrbitProgress } from 'react-loading-indicators'
 
 export default function GroupEventList() {
   const { id } = useParams()
   const [events, setEvents] = useState<EventGroup[]>([])
   const [selectedEventId, setSelectedEventId] = useState<number>(0)
   const [activeTab, setActiveTab] = useState('events')
+  const [isLoading, setIsLoading] = useState(false)
 
   const modalRef = useRef<IFormModalRef>(null)
   const [addForm] = Form.useForm()
@@ -50,9 +52,14 @@ export default function GroupEventList() {
 
   useEffect(() => {
     const getEvents = async () => {
-      const res = await groupApi.getAllEventsOfGroup(Number(id))
-      const data = res.data
-      setEvents(data['results'])
+      setIsLoading(true)
+      try {
+        const res = await groupApi.getAllEventsOfGroup(Number(id))
+        const data = res.data
+        setEvents(data['results'])
+      } finally {
+        setIsLoading(false)
+      }
     }
     getEvents()
   }, [id])
@@ -95,9 +102,15 @@ export default function GroupEventList() {
           {activeTab === 'events' && (
             <>
               <div className='scrollbar-hide mt-3 flex h-[29rem] flex-col gap-5 overflow-y-auto bg-white p-5'>
-                {events.map((event) => (
-                  <GroupEvent key={event.id} event={event} handleClick={() => setSelectedEventId(event.id)} />
-                ))}
+                {!isLoading &&
+                  events.map((event) => (
+                    <GroupEvent key={event.id} event={event} handleClick={() => setSelectedEventId(event.id)} />
+                  ))}
+                {isLoading && (
+                  <div className='flex h-full w-full items-center justify-center'>
+                    <OrbitProgress color='#32cd32' size='medium' text='' textColor='' />
+                  </div>
+                )}
               </div>
               <div className='fixed bottom-10 right-10 z-50 m-3 flex flex-col items-center'>
                 <div className='flex flex-col items-center space-y-2'>
