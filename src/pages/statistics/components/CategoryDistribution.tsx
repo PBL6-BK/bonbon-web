@@ -4,12 +4,14 @@ import { useEffect, useState } from 'react'
 import statisticsApi from 'src/apis/statistics.api'
 import dayjs from 'dayjs'
 import { useFieldValue } from 'src/shared/hook'
+import { OrbitProgress } from 'react-loading-indicators'
 const { RangePicker } = DatePicker
 
 export default function CategoryDistribution() {
   const [incomeData, setIncomeData] = useState([])
   const [outcomeData, setOutcomeData] = useState([])
   const [form] = Form.useForm()
+  const [isLoading, setIsLoading] = useState(false)
 
   const range = useFieldValue('range', form)
   const startDate = range?.[0].format('YYYY-MM-DD')
@@ -17,14 +19,18 @@ export default function CategoryDistribution() {
 
   useEffect(() => {
     const getCategoryDistribution = async () => {
-      const res = await statisticsApi.categoryDistribution(
-        startDate || dayjs().startOf('month').format('YYYY-MM-DD'),
-        endDate || dayjs().endOf('month').format('YYYY-MM-DD')
-      )
-      const data = res.data
-      setIncomeData(data['income'])
-      setOutcomeData(data['outcome'])
-      console.log(data)
+      setIsLoading(true)
+      try {
+        const res = await statisticsApi.categoryDistribution(
+          startDate || dayjs().startOf('month').format('YYYY-MM-DD'),
+          endDate || dayjs().endOf('month').format('YYYY-MM-DD')
+        )
+        const data = res.data
+        setIncomeData(data['income'])
+        setOutcomeData(data['outcome'])
+      } finally {
+        setIsLoading(false)
+      }
     }
     getCategoryDistribution()
   }, [endDate, startDate])
@@ -42,8 +48,17 @@ export default function CategoryDistribution() {
 
       <div className='scrollbar-hide flex h-[32rem] w-full justify-center overflow-y-auto'>
         <div className='w-3/6'>
-          <PieChart title='Outcome by Category' datasets={outcomeData} />
-          <PieChart title='Income by Category' datasets={incomeData} />
+          {!isLoading && (
+            <>
+              <PieChart title='Outcome by Category' datasets={outcomeData} />
+              <PieChart title='Income by Category' datasets={incomeData} />
+            </>
+          )}
+          {isLoading && (
+            <div className='flex h-full w-full items-center justify-center'>
+              <OrbitProgress color='#32cd32' size='medium' text='' textColor='' />
+            </div>
+          )}
         </div>
       </div>
     </>

@@ -6,6 +6,7 @@ interface CategoryContextType {
   categoryList: CategoryDetail[]
   setCategoryList: React.Dispatch<React.SetStateAction<CategoryDetail[]>>
   reloadCategories: () => void
+  isLoading: boolean
 }
 
 // Create context with default values
@@ -14,6 +15,7 @@ const CategoryContext = createContext<CategoryContextType | undefined>(undefined
 export const CategoryProvider = ({ children }: { children: ReactNode }) => {
   const [categoryList, setCategoryList] = useState<CategoryDetail[]>([])
   const [reloadTrigger, setReloadTrigger] = useState(0)
+  const [isLoading, setIsLoading] = useState(false)
 
   // Function to trigger re-fetch
   const reloadCategories = () => {
@@ -22,20 +24,22 @@ export const CategoryProvider = ({ children }: { children: ReactNode }) => {
 
   useEffect(() => {
     const fetchCategories = async () => {
+      setIsLoading(true)
       try {
         const response = await categoryApi.getAllCategories()
         const data = response.data
         setCategoryList(data['results'] || [])
-        console.log('category', data['result'])
       } catch (error) {
         console.error('Failed to fetch categories', error)
+      } finally {
+        setIsLoading(false)
       }
     }
     fetchCategories()
   }, [reloadTrigger])
 
   return (
-    <CategoryContext.Provider value={{ categoryList, setCategoryList, reloadCategories }}>
+    <CategoryContext.Provider value={{ categoryList, setCategoryList, reloadCategories, isLoading }}>
       {children}
     </CategoryContext.Provider>
   )

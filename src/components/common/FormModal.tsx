@@ -40,7 +40,7 @@ function FormModal(props: IProps, ref: Ref<IFormModalRef>) {
 
   const handleOk = () => {
     handleSubmit && handleSubmit()
-    setConfirmLoading(true)
+    setConfirmLoading(false)
     setOpen(false)
   }
 

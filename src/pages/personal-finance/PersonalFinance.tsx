@@ -18,6 +18,7 @@ export default function PersonalFinance() {
   const [income, setIncome] = useState<number>(0)
   const [outcome, setOutcome] = useState<number>(0)
   const [balance, setBalance] = useState<number>(0)
+  const [isLoading, setIsLoading] = useState(false)
 
   const handleAddSpending = (spending: SpendingDetail) => {
     setSpendingList([spending, ...spendingList])
@@ -95,12 +96,17 @@ export default function PersonalFinance() {
 
   useEffect(function () {
     const getSpendingList = async () => {
-      const res = await spendingApi.getAllSpendings()
-      const data = res.data
-      const newSpendingList = data['results']?.filter(
-        (item: SpendingDetail) => new Date(item.time).getMonth() === new Date().getMonth()
-      )
-      setSpendingList(newSpendingList || [])
+      setIsLoading(true)
+      try {
+        const res = await spendingApi.getAllSpendings()
+        const data = res.data
+        const newSpendingList = data['results']?.filter(
+          (item: SpendingDetail) => new Date(item.time).getMonth() === new Date().getMonth()
+        )
+        setSpendingList(newSpendingList || [])
+      } finally {
+        setIsLoading(false)
+      }
     }
     getSpendingList()
   }, [])
@@ -138,6 +144,7 @@ export default function PersonalFinance() {
             onAddSpending={handleAddSpending}
             onDeleteSpending={handleDeleteSpending}
             onFilterSpending={handleFilterSpending}
+            isLoading={isLoading}
           />
         </div>
       </div>

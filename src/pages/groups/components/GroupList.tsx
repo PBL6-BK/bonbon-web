@@ -9,6 +9,7 @@ import { Form } from 'antd'
 import GroupForm from './GroupForm'
 import { useFieldValue } from 'src/shared/hook'
 import { toast } from 'react-toastify'
+import { OrbitProgress } from 'react-loading-indicators'
 
 const colors = [
   'bg-blue-200',
@@ -68,6 +69,7 @@ export default function GroupList() {
   const [groups, setGroups] = useState<Group[]>([])
   const modalRef = useRef<IFormModalRef>(null)
   const [addForm] = Form.useForm()
+  const [isLoading, setIsLoading] = useState(false)
 
   const newGroup: RequestedGroup = {
     name: useFieldValue('name', addForm),
@@ -84,9 +86,14 @@ export default function GroupList() {
 
   useEffect(() => {
     const getUserGroups = async () => {
-      const res = await groupApi.getAllGroups()
-      const data = res.data
-      setGroups(data['results'] || [])
+      setIsLoading(true)
+      try {
+        const res = await groupApi.getAllGroups()
+        const data = res.data
+        setGroups(data['results'] || [])
+      } finally {
+        setIsLoading(false)
+      }
     }
     getUserGroups()
   }, [])
@@ -94,9 +101,15 @@ export default function GroupList() {
   return (
     <div className='scrollbar-hide m-1 flex min-h-full overflow-y-auto rounded-2xl bg-white p-5'>
       <div className='flex w-full flex-wrap gap-x-5'>
-        {groups.map((group, index) => {
-          return <GroupItem key={group.id} group={group} backgroundColor={colors[index % colors.length]} />
-        })}
+        {!isLoading &&
+          groups.map((group, index) => {
+            return <GroupItem key={group.id} group={group} backgroundColor={colors[index % colors.length]} />
+          })}
+        {isLoading && (
+          <div className='flex h-full w-full items-center justify-center'>
+            <OrbitProgress color='#32cd32' size='medium' text='' textColor='' />
+          </div>
+        )}
       </div>
       <div className='h-[32.5rem]'></div>
       <div className='fixed bottom-5 right-5 z-50 m-3 flex flex-col items-center'>

@@ -7,9 +7,10 @@ import { CategoryDetail } from 'src/types/category.type'
 import categoryApi from 'src/apis/category.api'
 import { toast } from 'react-toastify'
 import { useCategory } from 'src/contexts/category.context'
+import { OrbitProgress } from 'react-loading-indicators'
 
 export default function CategoryList({ income }: { income: number }) {
-  const { categoryList, setCategoryList, reloadCategories } = useCategory()
+  const { categoryList, setCategoryList, reloadCategories, isLoading } = useCategory()
   const modalRef = useRef<IFormModalRef>(null)
   const [addForm] = Form.useForm()
 
@@ -67,15 +68,21 @@ export default function CategoryList({ income }: { income: number }) {
         />
       </div>
       <div className='scrollbar-hide m-1 flex h-full flex-wrap overflow-y-auto rounded-2xl border-none bg-zinc-300 p-5'>
-        {categoryList.map((category) => (
-          <CategoryItem
-            key={category.id}
-            category={category}
-            categoryList={categoryList}
-            onUpdateCategory={handleUpdateCategory}
-            income={income}
-          />
-        ))}
+        {!isLoading &&
+          categoryList.map((category) => (
+            <CategoryItem
+              key={category.id}
+              category={category}
+              categoryList={categoryList}
+              onUpdateCategory={handleUpdateCategory}
+              income={income}
+            />
+          ))}
+        {isLoading && (
+          <div className='flex h-full w-full items-center justify-center'>
+            <OrbitProgress color='#32cd32' size='medium' text='' textColor='' />
+          </div>
+        )}
       </div>
     </>
   )

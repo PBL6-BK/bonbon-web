@@ -1,5 +1,5 @@
 import { Image, Menu, MenuRef } from 'antd'
-import { FC, useCallback, useEffect, useRef, useState } from 'react'
+import { FC, useEffect, useRef, useState } from 'react'
 import Logo from 'public/logo.png'
 import { SIDEBAR_OPTIONS } from 'src/shared/constant'
 import { Link } from 'react-router-dom'
@@ -11,9 +11,10 @@ interface PrivateLayoutSidebarProps {
 }
 
 const PrivateLayoutSidebar: FC<PrivateLayoutSidebarProps> = ({ isCollapsed = false }) => {
-  const [selectedKey, setSelectedKey] = useState<string>(
-    (SIDEBAR_OPTIONS.find((_item) => location.pathname.startsWith(_item.path))?.key as string) || 'members'
-  )
+  // const [selectedKey, setSelectedKey] = useState<string>(
+  //   (SIDEBAR_OPTIONS.find((_item) => location.pathname.startsWith(_item.path))?.key as string) || 'members'
+  // )
+  const [selectedKey, setSelectedKey] = useState<string>('statistics')
 
   const inputRef = useRef<MenuRef>(null)
 
