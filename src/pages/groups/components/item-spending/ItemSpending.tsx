@@ -128,7 +128,7 @@ export default function ItemSpending({ itemId, spendings, canModified, handleUpd
   }
 
   return (
-    <div className='-mt-2 rounded-b-lg bg-blue-300 p-4 shadow-md'>
+    <div className='-mt-2 rounded-b-lg bg-[#dde9ff] p-4 shadow-md'>
       {spendings?.length > 0 || isClickOnCreateText ? (
         <>
           <div className='mb-3 flex items-center justify-between px-2'>
@@ -136,8 +136,8 @@ export default function ItemSpending({ itemId, spendings, canModified, handleUpd
             {globalError && <span className='font-bold italic text-red-500'>{globalError}</span>}
             {!isEditing && (
               <button
-                className={`flex items-center gap-1 rounded border-none  px-3 py-1 text-lg text-white shadow  ${
-                  canModified ? 'bg-blue-500 hover:cursor-pointer hover:bg-blue-600' : 'bg-gray-500'
+                className={`flex items-center gap-1 rounded border-none  px-3 py-1 text-lg text-black shadow  ${
+                  canModified ? 'bg-[#4e9cff] hover:cursor-pointer hover:bg-blue-600' : 'bg-gray-500'
                 }`}
                 onClick={handleClickUpdateButton}
                 disabled={!canModified}
@@ -149,7 +149,7 @@ export default function ItemSpending({ itemId, spendings, canModified, handleUpd
           </div>
           <div className='overflow-x-auto'>
             <table className='w-full table-auto border-collapse bg-white text-left text-sm text-gray-700 shadow-md'>
-              <thead className='bg-blue-500 text-white'>
+              <thead className='bg-[#4e9cff] text-white'>
                 <tr>
                   <th className='px-4 py-2'>#</th>
                   <th className='px-4 py-2'>Member</th>
@@ -268,7 +268,7 @@ export default function ItemSpending({ itemId, spendings, canModified, handleUpd
             {isEditing && (
               <div className='mt-4 flex justify-between'>
                 <button
-                  className='rounded border-none bg-blue-500 px-4 py-2 text-white shadow hover:cursor-pointer hover:bg-blue-600'
+                  className='rounded border-none bg-[#4e9cff] px-4 py-2 text-white shadow hover:cursor-pointer hover:bg-blue-600'
                   onClick={handleAddRow}
                 >
                   <FontAwesomeIcon icon={faPlus} /> Add Row
@@ -281,7 +281,7 @@ export default function ItemSpending({ itemId, spendings, canModified, handleUpd
                     Cancel
                   </button>
                   <button
-                    className='rounded border-none bg-blue-500 px-4 py-2 text-white shadow hover:cursor-pointer hover:bg-blue-600'
+                    className='rounded border-none bg-[#4e9cff] px-4 py-2 text-white shadow hover:cursor-pointer hover:bg-blue-600'
                     onClick={isClickOnCreateText ? handleCreateSubmit : handleUpdateSubmit}
                   >
                     Submit

@@ -44,7 +44,7 @@ export default function EventItem({
       <div
         role='button'
         tabIndex={0}
-        className='flex w-full items-center justify-between rounded-xl bg-gradient-to-r from-indigo-100 to-blue-100 p-6 shadow-lg transition-all duration-300 hover:scale-105 hover:cursor-pointer hover:shadow-2xl'
+        className='flex w-full items-center justify-between rounded-xl bg-[#bfdbfe] p-6 shadow-lg transition-all duration-300 hover:scale-105 hover:cursor-pointer hover:shadow-2xl'
         onClick={toggleDropdown}
         onKeyDown={(e) => {
           if (e.key === 'Enter' || e.key === ' ') {

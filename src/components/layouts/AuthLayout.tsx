@@ -17,8 +17,8 @@ export default function AuthLayout({ children }: ReactWithChild) {
           </button>
           {dropdownOpen && (
             <div className='absolute right-0 mt-2 w-48 rounded-md bg-white shadow-lg'>
-              <button className='block w-full px-4 py-2 text-left text-gray-800 hover:bg-gray-200'>Settings</button>
-              <button className='block w-full px-4 py-2 text-left text-gray-800 hover:bg-gray-200'>Logout</button>
+              <button className='block w-full px-4 py-2 text-left text-gray-800 hover:bg-[#e6f4ff]'>Settings</button>
+              <button className='block w-full px-4 py-2 text-left text-gray-800 hover:bg-[#e6f4ff]'>Logout</button>
             </div>
           )}
         </div>

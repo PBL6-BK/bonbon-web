@@ -43,7 +43,7 @@ export default function GroupItem({ group, backgroundColor }: Props) {
           {/* <div className='flex items-center justify-between'>
             <p>Created by: </p>
             <div
-              className='h-8 w-8 rounded-full bg-green-400'
+              className='h-8 w-8 rounded-full bg-[#6ac6ff]'
               style={{
                 backgroundImage: `url(${group.members[0].avatar})`,
                 backgroundSize: 'cover',
@@ -58,7 +58,7 @@ export default function GroupItem({ group, backgroundColor }: Props) {
                 group.members.map((mem) => (
                   <div
                     key={mem.id}
-                    className='-ml-3 h-9 w-9 rounded-full bg-green-400'
+                    className='-ml-3 h-9 w-9 rounded-full bg-[#6ac6ff]'
                     style={{
                       backgroundImage: `url(${mem.avatar})`,
                       backgroundSize: 'cover',
@@ -71,7 +71,7 @@ export default function GroupItem({ group, backgroundColor }: Props) {
                   {group.members.slice(0, 3).map((mem) => (
                     <div
                       key={mem.id}
-                      className='-ml-3 h-9 w-9 rounded-full bg-green-400'
+                      className='-ml-3 h-9 w-9 rounded-full bg-[#6ac6ff]'
                       style={{
                         backgroundImage: `url(${mem.avatar})`,
                         backgroundSize: 'cover',

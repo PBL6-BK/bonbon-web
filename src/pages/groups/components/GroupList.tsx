@@ -19,7 +19,7 @@ const colors = [
   'bg-orange-200',
   'bg-yellow-200',
   'bg-amber-200',
-  'bg-green-200',
+  'bg-[#6ac6ff]',
   'bg-lime-200',
   'bg-emerald-200',
   'bg-teal-200',
@@ -34,7 +34,7 @@ const colors = [
   'bg-fuchsia-200',
   'bg-pink-200',
   'bg-rose-200',
-  'bg-gray-200',
+  'bg-[#e6f4ff]',
   'bg-zinc-200',
   'bg-neutral-200',
   'bg-blue-300',
@@ -57,8 +57,8 @@ const colors = [
   'bg-fuchsia-300',
   'bg-pink-300',
   'bg-rose-300',
-  'bg-gray-300',
-  'bg-zinc-300',
+  'bg-[#e6f4ff]',
+  'bg-[#e6f4ff]',
   'bg-neutral-300',
   'bg-stone-300',
   'bg-teal-300',
@@ -107,7 +107,7 @@ export default function GroupList() {
           })}
         {isLoading && (
           <div className='flex h-full w-full items-center justify-center'>
-            <OrbitProgress color='#32cd32' size='medium' text='' textColor='' />
+            <OrbitProgress color='#1da1f2' size='medium' text='' textColor='' />
           </div>
         )}
       </div>
@@ -115,7 +115,7 @@ export default function GroupList() {
       <div className='fixed bottom-5 right-5 z-50 m-3 flex flex-col items-center'>
         <div className='flex flex-col items-center space-y-2'>
           <button
-            className='shadow-3xl flex h-20 w-20 cursor-pointer items-center justify-center rounded-full border-none bg-green-500 text-white'
+            className='shadow-3xl flex h-20 w-20 cursor-pointer items-center justify-center rounded-full border-none bg-[#48baff] text-white'
             onClick={modalRef.current?.showModal}
           >
             <FontAwesomeIcon icon={faPlus} size='3x' />

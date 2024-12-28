@@ -169,7 +169,7 @@ const SettingsPage = () => {
                     className='flex-1'
                   >
                     <Select placeholder='Select currency'>
-                      <Select.Option value={Currency.VND}>VND</Select.Option>
+                      <Select.Option value={Currency.VND}>đ</Select.Option>
                     </Select>
                   </Form.Item>
 

@@ -37,7 +37,7 @@ export default function Spending({ spending, onDeleteSpending, onUpdateSpending 
   }
 
   return (
-    <li className='relative my-3 grid grid-cols-9 items-center rounded-2xl border-none bg-green-400 p-5 text-lg'>
+    <li className='relative my-3 grid grid-cols-9 items-center rounded-2xl border-none bg-[#6ac6ff] p-5 text-lg'>
       <FontAwesomeIcon
         icon={CategoryIcon.find((item) => item.name === spending.category_icon)?.icon || faXmark}
         size='2x'

@@ -36,17 +36,17 @@ export default function RefundList({ eventId }: Props) {
   }, [eventId])
 
   return (
-    <div className='h-full min-h-fit w-full bg-blue-300 p-4'>
+    <div className='h-full min-h-fit w-full bg-white p-4'>
       {isLoading ? (
         <div className='flex h-full w-full items-center justify-center'>
-          <OrbitProgress color='#32cd32' size='medium' text='' textColor='' />
+          <OrbitProgress color='#1da1f2' size='medium' text='' textColor='' />
         </div>
       ) : refundList.length > 0 ? (
         <>
           <div className='mb-3 flex items-center justify-between'>
             <h2 className='text-xl font-bold text-gray-800'>Refund list</h2>
             <button
-              className='flex items-center gap-1 rounded border-none bg-blue-500 px-3 py-1 text-lg text-white shadow hover:cursor-pointer hover:bg-blue-600'
+              className='flex items-center gap-1 rounded border-none bg-[#4e9cff] px-3 py-1 text-lg text-white shadow hover:cursor-pointer hover:bg-blue-600'
               onClick={hanldeUpdateRefund}
             >
               <FontAwesomeIcon icon={faRetweet} />

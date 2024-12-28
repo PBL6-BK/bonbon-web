@@ -233,13 +233,13 @@ export default function PlanChatbot({ onClose }: Props) {
 
   return (
     <div className='relative flex h-[36rem] w-96 flex-col rounded-t-2xl border border-gray-300 bg-white shadow-2xl'>
-      <div className='flex h-14 flex-shrink-0 items-center gap-3 rounded-t-2xl bg-green-400 ps-2'>
+      <div className='flex h-14 flex-shrink-0 items-center gap-3 rounded-t-2xl bg-[#6ac6ff] ps-2'>
         <div className='h-10 w-10 rounded-full bg-white'>
           <img src={BonBonChatbotImg} alt='Bonni' className='h-full w-full'></img>
         </div>
         <span className='text-xl font-bold'>Bonni Assistant</span>
         <button
-          className='absolute right-2 border-none bg-green-400 text-2xl text-red-500 hover:cursor-pointer hover:text-gray-800'
+          className='absolute right-2 border-none bg-[#6ac6ff] text-2xl text-red-500 hover:cursor-pointer hover:text-gray-800'
           onClick={onClose}
         >
           ❌
@@ -252,7 +252,7 @@ export default function PlanChatbot({ onClose }: Props) {
               {msg.type === 'text' ? (
                 <div
                   className={`inline-block max-w-[75%] break-words rounded-lg p-2 text-lg leading-normal ${
-                    msg.sender === 'user' ? 'bg-green-400 text-white' : 'bg-gray-200 text-black'
+                    msg.sender === 'user' ? 'bg-[#6ac6ff] text-white' : 'bg-[#e6f4ff] text-black'
                   }`}
                 >
                   {msg.text}
@@ -264,7 +264,7 @@ export default function PlanChatbot({ onClose }: Props) {
           ))}
           {displayedText && (
             <div className='mt-3 flex w-full justify-start'>
-              <div className='inline-block max-w-[75%] break-words rounded-md bg-gray-200 p-2 text-lg leading-normal text-black'>
+              <div className='inline-block max-w-[75%] break-words rounded-md bg-[#e6f4ff] p-2 text-lg leading-normal text-black'>
                 {displayedText}
               </div>
             </div>
@@ -316,7 +316,7 @@ export default function PlanChatbot({ onClose }: Props) {
           <div ref={bottomRef}></div>
         </div>
       </div>
-      <div className='flex h-16 flex-shrink-0 items-center bg-gray-300'>
+      <div className='flex h-16 flex-shrink-0 items-center bg-[#e6f4ff]'>
         <input
           type='text'
           value={userInput}
@@ -327,7 +327,7 @@ export default function PlanChatbot({ onClose }: Props) {
         />
         <button
           onClick={() => handleUserResponse(undefined, userInput)}
-          className='mr-2 rounded border-none bg-green-500 p-2 text-white hover:cursor-pointer'
+          className='mr-2 rounded border-none bg-[#48baff] p-2 text-white hover:cursor-pointer'
         >
           Send
         </button>

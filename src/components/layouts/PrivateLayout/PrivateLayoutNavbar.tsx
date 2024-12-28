@@ -13,7 +13,7 @@ const PrivateLayoutNavbar = () => {
 
   return (
     <>
-      <div className='flex w-full justify-between bg-fin px-8 py-5'>
+      <div className='flex w-full justify-between bg-[#48baff] px-8 py-5'>
         <div></div>
         <UserAvatar
           fullName={user?.fullName || user?.email || 'Guest'}
@@ -51,8 +51,8 @@ const UserAvatar: FC<UserAvatarProps> = ({ fullName, avatar }) => {
     <div className='group relative z-50'>
       <div className='flex items-center justify-center gap-3'>
         <p className='avatar-greet'>
-          <span className='text-md'>Hello, </span>
-          <span className='text-md font-semibold'>{fullName}</span>
+          <span className='text-lg'>Hello, </span>
+          <span className='text-lg font-semibold'>{fullName}</span>
         </p>
         <div className='avatar-wrapper h-12 w-12 overflow-hidden rounded-full'>
           <Image

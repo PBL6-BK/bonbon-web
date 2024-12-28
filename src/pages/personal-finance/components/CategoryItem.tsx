@@ -25,7 +25,7 @@ export default function CategoryItem({ category, categoryList, income, onUpdateC
 
   const progressColor =
     usedPercentage >= 80 && usedPercentage <= 100
-      ? 'bg-amber-600'
+      ? 'bg-[#ffdd04]'
       : usedPercentage > 100
       ? 'bg-red-600'
       : 'bg-green-600'

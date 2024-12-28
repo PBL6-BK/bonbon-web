@@ -76,16 +76,16 @@ export default function EventStatistics({ groupId, setSelectedEventId }: Props) 
         </Form>
       </div>
 
-      <div className='scrollbar-hide flex h-[25rem] w-full flex-col justify-center overflow-y-auto rounded-lg bg-gray-300 px-5 py-2 hover:cursor-pointer'>
+      <div className='scrollbar-hide flex h-[25rem] w-full flex-col justify-center overflow-y-auto rounded-lg bg-[#e6f4ff] px-5 py-2 hover:cursor-pointer'>
         {isLoading ? (
           <div className='flex h-full w-full items-center justify-center'>
-            <OrbitProgress color='#32cd32' size='medium' text='' textColor='' />
+            <OrbitProgress color='#1da1f2' size='medium' text='' textColor='' />
           </div>
         ) : events.length > 0 ? (
           events.map((event, index) => (
             <div
               key={event.id}
-              className={`mb-4 flex items-center justify-between rounded-lg bg-green-200 p-6 shadow-md transition-shadow duration-200 hover:shadow-lg ${
+              className={`mb-4 flex items-center justify-between rounded-lg bg-[#88d1ff] p-6 shadow-md transition-shadow duration-200 hover:shadow-lg ${
                 index === 0 ? '' : ''
               }`}
               onClick={() => setSelectedEventId(event.id)}
@@ -99,7 +99,7 @@ export default function EventStatistics({ groupId, setSelectedEventId }: Props) 
             >
               <div className='flex flex-col'>
                 <h3 className='text-xl font-bold text-gray-800'>{event.name}</h3>
-                <p className='mt-1 text-lg font-medium text-teal-600'>
+                <p className='mt-1 text-lg font-medium text-[#001a7d]'>
                   💰 Total Spent: {event.total_spent.toLocaleString()}đ
                 </p>
               </div>

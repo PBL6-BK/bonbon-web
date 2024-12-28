@@ -92,7 +92,7 @@ export default function FinancialOverview() {
         {!isLoading && <Bar data={data} options={options} />}
         {isLoading && (
           <div className='flex h-full w-full items-center justify-center'>
-            <OrbitProgress color='#32cd32' size='medium' text='' textColor='' />
+            <OrbitProgress color='#1da1f2' size='medium' text='' textColor='' />
           </div>
         )}
       </div>

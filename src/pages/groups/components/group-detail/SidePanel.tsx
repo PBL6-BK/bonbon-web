@@ -22,7 +22,7 @@ export default function SidePanel() {
 
   const [group, setGroup] = useState(location.state)
   const [members, setMembers] = useState<UserGroupDetail[]>([])
-  const [isOpenMember, setIsOpenMember] = useState(false)
+  const [isOpenMember, setIsOpenMember] = useState(true)
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const confirmModalRef = useRef<IConfirmModalRef>(null)
   const formModalRef = useRef<IFormModalRef>(null)
@@ -101,7 +101,7 @@ export default function SidePanel() {
               tabIndex={0}
             >
               <ul className=''>
-                <li className='p-2 hover:bg-gray-200'>
+                <li className='p-2 hover:bg-[#e6f4ff]'>
                   <button
                     className={`w-full border-none bg-inherit text-left text-lg ${
                       canEdit ? 'cursor-pointer text-black' : 'text-gray-400'
@@ -119,7 +119,7 @@ export default function SidePanel() {
                     handleSubmit={handleUpdateGroup}
                   />
                 </li>
-                <li className='p-2 hover:bg-gray-200'>
+                <li className='p-2 hover:bg-[#e6f4ff]'>
                   <button
                     className={`w-full border-none bg-inherit text-left text-lg ${
                       canEdit ? 'cursor-pointer text-black' : 'text-gray-400'
@@ -131,7 +131,7 @@ export default function SidePanel() {
                   </button>
                   <ConfirmModal title='Delete group' ref={confirmModalRef} onOk={handleDeleteGroup} />
                 </li>
-                <li className='p-2 hover:bg-gray-200'>
+                <li className='p-2 hover:bg-[#e6f4ff]'>
                   <button
                     className={`w-full border-none bg-inherit text-left text-lg ${
                       canEdit ? 'cursor-pointer text-black' : 'text-gray-400'
@@ -150,7 +150,7 @@ export default function SidePanel() {
                     handleCancel={() => addMemberForm.resetFields()}
                   />
                 </li>
-                <li className='p-2 hover:bg-gray-200'>
+                <li className='p-2 hover:bg-[#e6f4ff]'>
                   <button
                     className={`w-full border-none bg-inherit text-left text-lg ${
                       canEdit ? 'cursor-pointer text-black' : 'text-gray-400'
@@ -193,7 +193,7 @@ export default function SidePanel() {
           {members.map((mem) => (
             <li key={mem.id} className='flex items-center gap-3'>
               <div
-                className='h-8 w-8 rounded-full bg-green-400'
+                className='h-8 w-8 rounded-full bg-[#6ac6ff]'
                 style={{
                   backgroundImage: `url(${mem.avatar})`,
                   backgroundSize: 'cover',

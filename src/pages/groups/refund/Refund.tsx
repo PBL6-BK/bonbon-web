@@ -42,7 +42,7 @@ export default function RefundDetail({ refund }: Props) {
   }
 
   return (
-    <div className='mx-auto mb-5 max-w-lg rounded-lg bg-green-200 p-6 shadow-lg'>
+    <div className='mx-auto mb-5 max-w-lg rounded-lg bg-[#dde9ff] p-6 shadow-lg'>
       {/* Top Section */}
       <div className='mb-2 grid grid-cols-2 gap-4 border-b pb-4'>
         <div>
@@ -73,7 +73,7 @@ export default function RefundDetail({ refund }: Props) {
       <div className='mb-5 grid grid-cols-2 gap-4'>
         <div>
           <h3 className='text-sm text-gray-500'>Amount</h3>
-          <p className='truncate text-lg font-semibold text-green-600'>
+          <p className='truncate text-lg font-semibold text-[#0040ff]'>
             {refund.amount.toLocaleString()}
             {convertCurrencyToSymbol(refund.currency)}
           </p>
@@ -92,7 +92,7 @@ export default function RefundDetail({ refund }: Props) {
             className={`flex h-8 w-8 items-center justify-center rounded-full ${
               canClickTransfer ? 'hover:cursor-pointer' : ''
             }
-              ${isTranfered ? 'bg-green-500 text-white' : 'bg-gray-200 text-gray-500'}`}
+              ${isTranfered ? 'bg-[#48baff] text-white' : 'bg-[#e6f4ff] text-gray-500'}`}
             role='button'
             tabIndex={0}
             onClick={() => {
@@ -124,7 +124,7 @@ export default function RefundDetail({ refund }: Props) {
             className={`flex h-8 w-8 items-center justify-center rounded-full ${
               canClickReceive ? 'hover:cursor-pointer' : ''
             }
-              ${isReceived ? 'bg-blue-500 text-white' : 'bg-gray-200 text-gray-500'}`}
+              ${isReceived ? 'bg-[#4e9cff] text-white' : 'bg-[#e6f4ff] text-gray-500'}`}
             role='button'
             tabIndex={0}
             onClick={() => {
@@ -153,7 +153,7 @@ export default function RefundDetail({ refund }: Props) {
       <div className='mt-6'>
         <button
           onClick={() => setIsQRCodeVisible(!isQRCodeVisible)}
-          className='w-full rounded-lg border-none bg-blue-500 py-2 text-white hover:cursor-pointer hover:bg-blue-600'
+          className='w-full rounded-lg border-none bg-[#4e9cff] py-2 text-white hover:cursor-pointer hover:bg-blue-600'
         >
           {isQRCodeVisible ? 'Hide QR Code' : 'Show QR Code'}
         </button>

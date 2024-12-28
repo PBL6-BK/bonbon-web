@@ -52,7 +52,7 @@ export default function CategoryList({ income }: { income: number }) {
       <div className='flex justify-between gap-3'>
         <h2>Category</h2>
         <button
-          className='text-md rounded border-none bg-green-400 p-2 font-bold text-black hover:cursor-pointer hover:bg-green-500'
+          className='text-md rounded border-none bg-[#6ac6ff] p-2 font-bold text-black hover:cursor-pointer hover:bg-[#48baff]'
           onClick={() => modalRef.current?.showModal()}
         >
           + Add category
@@ -67,7 +67,7 @@ export default function CategoryList({ income }: { income: number }) {
           handleSubmit={handleAddCategory}
         />
       </div>
-      <div className='scrollbar-hide m-1 flex h-full flex-wrap overflow-y-auto rounded-2xl border-none bg-zinc-300 p-5'>
+      <div className='scrollbar-hide m-1 flex h-full flex-wrap overflow-y-auto rounded-2xl border-none bg-[#e6f4ff] p-5'>
         {!isLoading &&
           categoryList.map((category) => (
             <CategoryItem
@@ -80,7 +80,7 @@ export default function CategoryList({ income }: { income: number }) {
           ))}
         {isLoading && (
           <div className='flex h-full w-full items-center justify-center'>
-            <OrbitProgress color='#32cd32' size='medium' text='' textColor='' />
+            <OrbitProgress color='#1da1f2' size='medium' text='' textColor='' />
           </div>
         )}
       </div>

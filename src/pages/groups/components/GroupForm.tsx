@@ -47,7 +47,7 @@ export default function GroupForm({ title, modalRef, form, formData, handleSubmi
   //   const selectedUser = users.find((user) => user.id === value)
 
   //   return (
-  //     <span className='custom-tag rounded-2 me-1 rounded-md bg-gray-200 p-1'>
+  //     <span className='custom-tag rounded-2 me-1 rounded-md bg-[#e6f4ff] p-1'>
   //       {selectedUser ? selectedUser.email : label}{' '}
   //       <span onClick={onClose} style={{ marginLeft: 4, cursor: 'pointer' }}>
   //         ×
@@ -105,7 +105,7 @@ export default function GroupForm({ title, modalRef, form, formData, handleSubmi
                 <Option key={user.id} value={user.id}>
                   {/* <div className='flex items-center gap-3'>
                   <div
-                    className='h-8 w-8 rounded-full bg-green-400'
+                    className='h-8 w-8 rounded-full bg-[#6ac6ff]'
                     style={{
                       backgroundImage: `url(${user.avatar})`,
                       backgroundSize: 'cover',

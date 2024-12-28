@@ -79,7 +79,7 @@ export default function EventItemList({ eventId, canModified }: Props) {
           ))}
         {isLoading && (
           <div className='flex h-full w-full items-center justify-center'>
-            <OrbitProgress color='#32cd32' size='medium' text='' textColor='' />
+            <OrbitProgress color='#1da1f2' size='medium' text='' textColor='' />
           </div>
         )}
       </div>
@@ -87,7 +87,7 @@ export default function EventItemList({ eventId, canModified }: Props) {
       <div className='fixed bottom-10 right-10 z-50 m-3 flex flex-col items-center'>
         <div className='flex flex-col items-center space-y-2'>
           <button
-            className='shadow-3xl flex h-14 w-14 items-center justify-center rounded-full border-none bg-green-500 text-white hover:cursor-pointer'
+            className='shadow-3xl flex h-14 w-14 items-center justify-center rounded-full border-none bg-[#48baff] text-white hover:cursor-pointer'
             onClick={modalRef.current?.showModal}
           >
             <FontAwesomeIcon icon={faPlus} size='2x' />
