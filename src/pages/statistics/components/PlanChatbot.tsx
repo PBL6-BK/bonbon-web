@@ -162,13 +162,21 @@ export default function PlanChatbot({ onClose }: Props) {
     setLoading(true)
     const res = await aiAssistanceApi.suggestBudgetDecision(Number(userResponses.current.savings))
     const data = res.data
+    console.log(data)
     const categoryList = data['response']['savings_plan']['recommendations']
     const categoryMsg: Message[] = []
 
-    categoryList.forEach((category: CategoryData) => {
-      categoryMsg.push({ text: category, sender: 'bot', type: 'card' })
-    })
-
+    if (categoryList.length === 0) {
+      categoryMsg.push({
+        text: "I'm sorry 😔, but I don't have enough information to assist you with this request.",
+        sender: 'bot',
+        type: 'text'
+      })
+    } else {
+      categoryList.forEach((category: CategoryData) => {
+        categoryMsg.push({ text: category, sender: 'bot', type: 'card' })
+      })
+    }
     setMessages((prevMessages) => [...prevMessages, ...categoryMsg])
     setLoading(false)
   }
@@ -292,7 +300,7 @@ export default function PlanChatbot({ onClose }: Props) {
             : null}
           {loading && (
             <div className='mt-3 text-center'>
-              <ThreeDot variant='pulsate' color='#32cd32' size='small' text='' textColor='' />
+              <ThreeDot variant='pulsate' color='#1da1f2' size='small' text='' textColor='' />
             </div>
           )}
           {showAnotherOptions && (

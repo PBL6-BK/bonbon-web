@@ -38,6 +38,8 @@ const UserAvatar: FC<UserAvatarProps> = ({ fullName, avatar }) => {
       handleLogout()
     } else if (title === 'Settings') {
       navigate(PATH_URL.settings)
+    } else if (title === 'Q&A') {
+      navigate(PATH_URL.faq)
     }
   }
 
@@ -69,8 +71,8 @@ const UserAvatar: FC<UserAvatarProps> = ({ fullName, avatar }) => {
       <div className='avatar-menu pointer-events-none absolute right-0 bg-white p-4 opacity-0 shadow-lg group-hover:pointer-events-auto group-hover:opacity-100'>
         <ul>
           {USER_DROPDOWN_OPTIONS.map((option: UserOptions) => (
-            <li key={option.title} className='flex items-center gap-2 p-2 hover:bg-gray-100'>
-              <Button onClick={() => handleUserDropdownClick(option.title)}>
+            <li key={option.title} className='flex gap-2 p-2 hover:bg-gray-100'>
+              <Button onClick={() => handleUserDropdownClick(option.title)} className='w-full text-start'>
                 <Icon icon={option.icon} />
                 {option.title}
               </Button>

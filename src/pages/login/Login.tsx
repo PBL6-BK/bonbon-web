@@ -7,6 +7,8 @@ import { AppContext, AppContextType } from 'src/contexts/app.context'
 import { LoginImg } from 'src/assets/images'
 import HStack from 'src/components/atomic/HStack'
 import { setProfileToLS } from 'src/utils/auth'
+import { Link } from 'react-router-dom'
+import { Icon } from '@iconify/react'
 
 export default function Home() {
   const [idToken, setIdToken] = useState<string>('')
@@ -63,7 +65,6 @@ export default function Home() {
               <GoogleLogin
                 onSuccess={(authResponse) => {
                   setIdToken(authResponse.credential as string)
-                  console.log('authResponse', authResponse)
                 }}
                 text='continue_with'
                 size='medium'
@@ -74,6 +75,12 @@ export default function Home() {
           </GoogleOAuthProvider>
         </div>
       </div>
+      <Link to='/faq'>
+        <div className='fixed bottom-5 right-5 m-3 flex items-center gap-2 text-xl text-black'>
+          <Icon icon='fa:question-circle' />
+          <span>Q&A</span>
+        </div>
+      </Link>
     </HStack>
   )
 }

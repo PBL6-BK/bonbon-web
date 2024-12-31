@@ -33,8 +33,12 @@ export const PRIVATE_ROUTES: Route[] = [
 ]
 
 export const DEFAULT_ROUTE: Route[] = [
+  // {
+  //   path: PATH_URL.personalFinance,
+  //   element: () => import('src/pages/not-found')
+  // },
   {
-    path: PATH_URL.personalFinance,
-    element: () => import('src/pages/not-found')
+    path: PATH_URL.faq,
+    element: () => import('src/pages/faq/Faq')
   }
 ]

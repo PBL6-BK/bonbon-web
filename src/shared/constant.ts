@@ -27,7 +27,6 @@ import {
   faCube,
   faDesktop,
   faEgg,
-  faEllipsisV,
   faEnvelope,
   faFan,
   faFilm,
@@ -99,6 +98,10 @@ export const USER_DROPDOWN_OPTIONS: UserOptions[] = [
     icon: 'fa:cog'
   },
   {
+    title: 'Q&A',
+    icon: 'fa:question-circle'
+  },
+  {
     title: 'Logout',
     icon: 'fa:sign-out'
   }
@@ -112,16 +115,10 @@ export type sidebarContent = {
 }
 
 export const SIDEBAR_OPTIONS = [
-  // {
-  //   key: 'personal-finance',
-  //   label: 'Personal Finance',
-  //   path: '/personal-finance',
-  //   icon: 'fa:money'
-  // },
   {
     key: 'personal-finance',
     label: 'Personal Finance',
-    path: '/',
+    path: '/personal-finance',
     icon: 'fa:money'
   },
   {

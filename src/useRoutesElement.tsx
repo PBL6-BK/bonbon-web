@@ -1,5 +1,5 @@
 import { RouteObject, useRoutes } from 'react-router-dom'
-import { AUTH_ROUTES, PRIVATE_ROUTES } from './shared/path'
+import { AUTH_ROUTES, PRIVATE_ROUTES, DEFAULT_ROUTE } from './shared/path'
 
 // component
 import { Row, Spin } from 'antd'
@@ -46,7 +46,7 @@ export default function useRouteElements() {
       element: <NotFoundPage />
     },
     {
-      path: PATH_URL.personalFinance,
+      path: PATH_URL.home,
       element: <PrivateRoutes />,
       children: wrapRoutesWithLazy({ routes: PRIVATE_ROUTES })
     },
@@ -54,6 +54,11 @@ export default function useRouteElements() {
       path: PATH_URL.auth,
       element: <AuthRoutes />,
       children: wrapRoutesWithLazy({ routes: AUTH_ROUTES })
+    },
+    {
+      path: PATH_URL.faq,
+      element: <DefaultRoute />,
+      children: wrapRoutesWithLazy({ routes: DEFAULT_ROUTE })
     }
   ]
   return useRoutes(routeElements)

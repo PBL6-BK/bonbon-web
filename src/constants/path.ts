@@ -1,11 +1,12 @@
 export const PATH_URL = {
-  // home: '/',
+  home: '/',
   auth: '/auth',
   login: '/auth/login',
-  // personalFinance: '/personal-finance',
-  personalFinance: '/',
+  personalFinance: '/personal-finance',
+  // personalFinance: '/',
   groups: '/groups',
   settings: '/settings',
   statistics: '/statistics',
-  groupDetail: '/groups/:id'
+  groupDetail: '/groups/:id',
+  faq: '/faq'
 }

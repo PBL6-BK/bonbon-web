@@ -17,19 +17,20 @@ export default function CategoryCard({ categoryData }: Props) {
       <div className='mt-2 text-lg text-gray-700'>
         {categoryData.current_spending && (
           <p>
-            <span className='font-medium text-[#001a7d]'>Current Spending:</span> $
-            {categoryData.current_spending.toFixed(2)}
+            <span className='font-medium text-[#001a7d]'>Current Spending:</span>{' '}
+            {categoryData.current_spending.toLocaleString().split(',')[0]}đ
           </p>
         )}
         {categoryData.budget && (
           <p>
-            <span className='font-medium text-[#001a7d]'>Budget:</span> ${categoryData.budget.toFixed(2)}
+            <span className='font-medium text-[#001a7d]'>Budget:</span>{' '}
+            {categoryData.budget.toLocaleString().split(',')[0]}đ
           </p>
         )}
         {categoryData.suggested_reduction && (
           <p>
-            <span className='font-medium text-[#001a7d]'>Suggested Reduction:</span> $
-            {categoryData.suggested_reduction.toFixed(2)}
+            <span className='font-medium text-[#001a7d]'>Suggested Reduction:</span>{' '}
+            {categoryData.suggested_reduction.toLocaleString().split(',')[0]}đ
           </p>
         )}
         {categoryData.explanation && <p>{categoryData.explanation}</p>}
