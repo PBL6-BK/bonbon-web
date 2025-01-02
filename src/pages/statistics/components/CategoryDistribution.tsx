@@ -47,11 +47,11 @@ export default function CategoryDistribution() {
       </div>
 
       <div className='scrollbar-hide flex h-[32rem] w-full justify-center overflow-y-auto'>
-        <div className='w-3/6'>
+        <div className='w-5/6'>
           {!isLoading && (
             <>
               <PieChart title='Outcome by Category' datasets={outcomeData} />
-              <PieChart title='Income by Category' datasets={incomeData} />
+              {/* <PieChart title='Income by Category' datasets={incomeData} /> */}
             </>
           )}
           {isLoading && (

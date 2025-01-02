@@ -21,11 +21,15 @@ export default function CategoryCard({ categoryData }: Props) {
             {categoryData.current_spending.toLocaleString().split(',')[0]}đ
           </p>
         )}
-        {categoryData.budget && (
+        {categoryData.budget ? (
           <p>
             <span className='font-medium text-[#001a7d]'>Budget:</span>{' '}
             {categoryData.budget.toLocaleString().split(',')[0]}đ
           </p>
+        ) : (
+          <span className='font-medium text-[#001a7d]'>
+            Budget: <span className='text-gray-700'>0đ</span>
+          </span>
         )}
         {categoryData.suggested_reduction && (
           <p>

@@ -90,6 +90,7 @@ export default function GroupList() {
       try {
         const res = await groupApi.getAllGroups()
         const data = res.data
+        console.log(data)
         setGroups(data['results'] || [])
       } finally {
         setIsLoading(false)
